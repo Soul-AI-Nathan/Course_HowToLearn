@@ -15,7 +15,7 @@ struct PodcastDetailView: View {
     @State private var takeaways: [String]
     @EnvironmentObject var firestoreManager: FirestoreManager
     @State private var isShareSheetPresented = false
-    @State private var screenshotImage: UIImage?
+    @State private var screenshotImage: IdentifiableImage?
 
     init(podcast: Podcast) {
         self.podcast = podcast
@@ -110,25 +110,33 @@ struct PodcastDetailView: View {
                 reloadPodcastData()
             }
         }
-        .sheet(isPresented: $isShareSheetPresented, content: {
-            if let screenshotImage = screenshotImage {
-                ShareSheet(activityItems: [screenshotImage])
-            }
+        .sheet(item: $screenshotImage, onDismiss: {
+            screenshotImage = nil
+        }, content: { item in
+            ShareSheet(activityItems: [item.image])
         })
     }
 
     private func takeScreenshot() {
-        let keyWindow = UIApplication.shared.connectedScenes
-            .flatMap { ($0 as? UIWindowScene)?.windows ?? [] }
-            .first { $0.isKeyWindow }
+        print("Attempting to take screenshot...")
 
-        if let keyWindow = keyWindow {
-            let renderer = UIGraphicsImageRenderer(size: keyWindow.bounds.size)
-            let image = renderer.image { ctx in
-                keyWindow.drawHierarchy(in: keyWindow.bounds, afterScreenUpdates: true)
+        guard let window = UIApplication.shared.windows.first else {
+            print("No key window found.")
+            return
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            print("Starting renderer...")
+
+            if let image = window.snapshot {
+                print("Renderer completed...")
+                DispatchQueue.main.async {
+                    self.screenshotImage = IdentifiableImage(image: image)
+                    print("Screenshot taken, presenting share sheet.")
+                }
+            } else {
+                print("Snapshot failed.")
             }
-            screenshotImage = image
-            isShareSheetPresented = true
         }
     }
 

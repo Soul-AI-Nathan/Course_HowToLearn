@@ -16,6 +16,7 @@ class FirestoreManager: ObservableObject {
     @Published var books = [Book]()
     @Published var podcasts = [Podcast]()
     @Published var courses = [Course]()
+    @Published var projects = [Project]()
     private var db = Firestore.firestore()
     private let defaults = UserDefaults.standard
 
@@ -26,6 +27,7 @@ class FirestoreManager: ObservableObject {
         fetchBooks()
         fetchPodcasts()
         fetchCourses()
+        fetchProjects()
     }
 
     // Request notification permission
@@ -426,6 +428,90 @@ class FirestoreManager: ObservableObject {
     
     func removeTakeawayFromCourse(courseID: String, takeaway: String) {
         let document = db.collection("courses").document(courseID)
+        document.updateData([
+            "takeaways": FieldValue.arrayRemove([takeaway])
+        ]) { error in
+            if let error = error {
+                print("Error removing takeaway: \(error.localizedDescription)")
+            } else {
+                print("Takeaway successfully removed")
+            }
+        }
+    }
+    
+    // Fetch projects with a snapshot listener for real-time updates
+    func fetchProjects() {
+        db.collection("projects").order(by: "timestamp", descending: true).addSnapshotListener { (querySnapshot, error) in
+            if let error = error {
+                print("Error getting documents: \(error)")
+            } else {
+                let newProjects = querySnapshot?.documents.compactMap { document -> Project? in
+                    try? document.data(as: Project.self)
+                } ?? []
+                
+                let newProjectIDs = Set(newProjects.compactMap { $0.id })
+                self.checkForNewItems(oldIDsKey: "lastKnownProjectIDs", newItems: newProjects, newIDs: newProjectIDs, type: "Project")
+                self.projects = newProjects
+            }
+        }
+    }
+
+    func addProject(_ project: Project) {
+        do {
+            let _ = try db.collection("projects").addDocument(from: project)
+        } catch {
+            print("Error adding project: \(error)")
+        }
+    }
+
+    func updateProject(project: Project) {
+        guard let projectID = project.id else {
+            print("Project ID is nil")
+            return
+        }
+
+        let document = db.collection("projects").document(projectID)
+        document.setData([
+            "title": project.title,
+            "description": project.description,
+            "image_url": project.image_url,
+            "project_url": project.project_url,
+            "timestamp": project.timestamp
+        ]) { error in
+            if let error = error {
+                print("Error updating document: \(error.localizedDescription)")
+            } else {
+                print("Document successfully updated")
+            }
+        }
+    }
+
+    func deleteProject(project: Project) {
+        guard let projectID = project.id else { return }
+        db.collection("projects").document(projectID).delete { error in
+            if let error = error {
+                print("Error deleting project: \(error.localizedDescription)")
+            } else {
+                print("Project successfully deleted")
+            }
+        }
+    }
+
+    func addTakeawayToProject(projectID: String, takeaway: String) {
+        let document = db.collection("projects").document(projectID)
+        document.updateData([
+            "takeaways": FieldValue.arrayUnion([takeaway])
+        ]) { error in
+            if let error = error {
+                print("Error adding takeaway to project: \(error.localizedDescription)")
+            } else {
+                print("Takeaway successfully added to project")
+            }
+        }
+    }
+
+    func removeTakeawayFromProject(projectID: String, takeaway: String) {
+        let document = db.collection("projects").document(projectID)
         document.updateData([
             "takeaways": FieldValue.arrayRemove([takeaway])
         ]) { error in

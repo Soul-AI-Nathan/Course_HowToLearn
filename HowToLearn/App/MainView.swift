@@ -12,7 +12,7 @@ struct MainView: View {
     @State private var selectedTab = 0
     @State private var selectedItemID: String?
     @State private var navigateToDetail = false
-    @State private var selectedViewType: String?
+    @State private var selectedSegment = 0
 
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -34,55 +34,37 @@ struct MainView: View {
             .tag(0)
 
             NavigationView {
-                VideoView()
-                    .background(
-                        NavigationLink(
-                            destination: detailView(),
-                            isActive: $navigateToDetail,
-                            label: { EmptyView() }
-                        )
-                        .hidden()
+                VStack {
+                    Picker("Select Category", selection: $selectedSegment) {
+                        Text("Video").tag(0)
+                        Text("Book").tag(1)
+                        Text("Podcast").tag(2)
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
+                    .padding()
+
+                    if selectedSegment == 0 {
+                        VideoView()
+                    } else if selectedSegment == 1 {
+                        BookView()
+                    } else {
+                        PodcastView()
+                    }
+                }
+                .background(
+                    NavigationLink(
+                        destination: detailView(),
+                        isActive: $navigateToDetail,
+                        label: { EmptyView() }
                     )
+                    .hidden()
+                )
             }
             .tabItem {
                 Image(systemName: "play.rectangle")
-                Text("Video")
+                Text("Media")
             }
             .tag(1)
-
-            NavigationView {
-                BookView()
-                    .background(
-                        NavigationLink(
-                            destination: detailView(),
-                            isActive: $navigateToDetail,
-                            label: { EmptyView() }
-                        )
-                        .hidden()
-                    )
-            }
-            .tabItem {
-                Image(systemName: "book")
-                Text("Book")
-            }
-            .tag(2)
-
-            NavigationView {
-                PodcastView()
-                    .background(
-                        NavigationLink(
-                            destination: detailView(),
-                            isActive: $navigateToDetail,
-                            label: { EmptyView() }
-                        )
-                        .hidden()
-                    )
-            }
-            .tabItem {
-                Image(systemName: "headphones")
-                Text("Podcast")
-            }
-            .tag(3)
 
             NavigationView {
                 CourseView()
@@ -99,7 +81,24 @@ struct MainView: View {
                 Image(systemName: "desktopcomputer")
                 Text("Course")
             }
-            .tag(4)
+            .tag(2)
+
+            NavigationView {
+                ProjectView()
+                    .background(
+                        NavigationLink(
+                            destination: detailView(),
+                            isActive: $navigateToDetail,
+                            label: { EmptyView() }
+                        )
+                        .hidden()
+                    )
+            }
+            .tabItem {
+                Image(systemName: "folder")
+                Text("Project")
+            }
+            .tag(3)
         }
         .onAppear {
             NotificationCenter.default.addObserver(forName: .didReceiveDeepLink, object: nil, queue: .main) { notification in
@@ -113,19 +112,23 @@ struct MainView: View {
     private func handleDeepLink(url: URL) {
         if let host = url.host, let queryItems = URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems, let id = queryItems.first(where: { $0.name == "id" })?.value {
             selectedItemID = id
-            selectedViewType = host
 
             switch host {
             case "article":
                 selectedTab = 0
             case "video":
                 selectedTab = 1
+                selectedSegment = 0
             case "book":
-                selectedTab = 2
+                selectedTab = 1
+                selectedSegment = 1
             case "podcast":
-                selectedTab = 3
+                selectedTab = 1
+                selectedSegment = 2
             case "course":
-                selectedTab = 4
+                selectedTab = 2
+            case "project":
+                selectedTab = 3
             default:
                 break
             }
@@ -138,30 +141,28 @@ struct MainView: View {
 
     @ViewBuilder
     private func detailView() -> some View {
-        if let id = selectedItemID, let viewType = selectedViewType {
-            switch viewType {
-            case "article":
-                if let article = firestoreManager.articles.first(where: { $0.id == id }) {
-                    ArticleDetailView(article: article)
-                }
-            case "video":
+        if let id = selectedItemID {
+            switch selectedSegment {
+            case 0:
                 if let video = firestoreManager.videos.first(where: { $0.id == id }) {
                     VideoDetailView(video: video)
                 }
-            case "book":
+            case 1:
                 if let book = firestoreManager.books.first(where: { $0.id == id }) {
                     BookDetailView(book: book)
                 }
-            case "podcast":
+            case 2:
                 if let podcast = firestoreManager.podcasts.first(where: { $0.id == id }) {
                     PodcastDetailView(podcast: podcast)
                 }
-            case "course":
-                if let course = firestoreManager.courses.first(where: { $0.id == id }) {
-                    CourseDetailView(course: course)
-                }
             default:
                 EmptyView()
+            }
+
+            if let course = firestoreManager.courses.first(where: { $0.id == id }) {
+                CourseDetailView(course: course)
+            } else if let project = firestoreManager.projects.first(where: { $0.id == id }) {
+                ProjectDetailView(project: project)
             }
         } else {
             EmptyView()
@@ -172,5 +173,3 @@ struct MainView: View {
 #Preview {
     MainView()
 }
-
-

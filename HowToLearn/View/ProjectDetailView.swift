@@ -1,33 +1,30 @@
-//
-//  CourseDetailView.swift
-//  HowToLearn
-//
-//  Created by How on 6/11/24.
-//
-
 import SwiftUI
 import FirebaseFirestore
 
-struct CourseDetailView: View {
-    let course: Course
+struct IdentifiableImage: Identifiable {
+    let id = UUID()
+    let image: UIImage
+}
+
+struct ProjectDetailView: View {
+    let project: Project
     @State private var newTakeawayText = ""
     @State private var showAddTakeawayAlert = false
     @State private var takeaways: [String]
     @EnvironmentObject var firestoreManager: FirestoreManager
-    @State private var isShareSheetPresented = false
     @State private var screenshotImage: IdentifiableImage?
 
-    init(course: Course) {
-        self.course = course
-        _takeaways = State(initialValue: course.takeaways ?? [])
+    init(project: Project) {
+        self.project = project
+        _takeaways = State(initialValue: project.takeaways ?? [])
     }
 
     var body: some View {
         ZStack {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .center, spacing: 20) {
-                    if let url = URL(string: course.image_url) {
-                        Link(destination: URL(string: course.course_url)!) {
+                    if let url = URL(string: project.image_url) {
+                        Link(destination: URL(string: project.project_url)!) {
                             AsyncImage(url: url) { image in
                                 image
                                     .resizable()
@@ -35,15 +32,15 @@ struct CourseDetailView: View {
                             } placeholder: {
                                 ProgressView()
                             }
-                            .frame(height: 300)
+                            .frame(height: 250)
                         }
                     }
 
-                    Text("点击图片学习")
+                    Text("点击图片查看项目")
                         .font(.caption)
                         .foregroundColor(.blue)
 
-                    Text(course.title.uppercased())
+                    Text(project.title.uppercased())
                         .font(.title3)
                         .fontWeight(.heavy)
                         .multilineTextAlignment(.center)
@@ -55,7 +52,7 @@ struct CourseDetailView: View {
                                 .offset(y: 24)
                         )
 
-                    Text(course.description.replacingOccurrences(of: "\\n", with: "\n"))
+                    Text(project.description.replacingOccurrences(of: "\\n", with: "\n"))
                         .font(.body)
                         .lineSpacing(9)
                         .multilineTextAlignment(.leading)
@@ -69,16 +66,16 @@ struct CourseDetailView: View {
                                 .font(.headline)
                                 .foregroundColor(.primary)
                                 .padding(.top)
-                            TakeawayView(itemID: course.id ?? "", contentType: .course, takeaways: $takeaways)
+                            TakeawayView(itemID: project.id ?? "", contentType: .project, takeaways: $takeaways)
                                 .environmentObject(firestoreManager)
                         }
                     }
 
                     // COMMENTS
-                    CommentCourseView(courseID: course.id ?? "")
+                    CommentProjectView(projectID: project.id ?? "")
                         .padding(.bottom, 10) // Add padding at the bottom to keep it above the tab bar
                 }
-                .navigationBarTitle("Learn about \(course.title)", displayMode: .inline)
+                .navigationBarTitle("Learn about \(project.title)", displayMode: .inline)
                 .navigationBarItems(trailing: HStack {
                     Button(action: {
                         withAnimation {
@@ -107,7 +104,7 @@ struct CourseDetailView: View {
         }
         .onChange(of: showAddTakeawayAlert) { _ in
             if !showAddTakeawayAlert {
-                reloadCourseData()
+                reloadProjectData()
             }
         }
         .sheet(item: $screenshotImage, onDismiss: {
@@ -141,21 +138,21 @@ struct CourseDetailView: View {
     }
 
     private func addNewTakeaway(takeaway: String) {
-        guard let courseID = course.id else { return }
-        firestoreManager.addTakeawayToCourse(courseID: courseID, takeaway: takeaway)
+        guard let projectID = project.id else { return }
+        firestoreManager.addTakeawayToProject(projectID: projectID, takeaway: takeaway)
         takeaways.append(takeaway)
     }
 
-    private func reloadCourseData() {
+    private func reloadProjectData() {
         let db = Firestore.firestore()
-        if let courseID = course.id {
-            let document = db.collection("courses").document(courseID)
+        if let projectID = project.id {
+            let document = db.collection("projects").document(projectID)
             document.getDocument { snapshot, error in
                 if let snapshot = snapshot, snapshot.exists {
-                    if let updatedCourse = try? snapshot.data(as: Course.self) {
-                        self.takeaways = updatedCourse.takeaways ?? []
+                    if let updatedProject = try? snapshot.data(as: Project.self) {
+                        self.takeaways = updatedProject.takeaways ?? []
                     } else {
-                        print("Failed to parse updated course")
+                        print("Failed to parse updated project")
                     }
                 } else {
                     print("Document does not exist or error: \(error?.localizedDescription ?? "unknown error")")
@@ -165,9 +162,16 @@ struct CourseDetailView: View {
     }
 }
 
-
 #Preview {
-    CourseDetailView(course: Course(id: "1", title: "Sample Title", description: "Sample description for the course.", image_url: "https://via.placeholder.com/150", course_url: "https://www.xiaoyuzhoufm.com/episode/665faf066488b5dec3b8b28d", timestamp: Date(), takeaways: ["This is a sample takeaway.", "Another takeaway."]))
+    ProjectDetailView(project: Project(id: "1", title: "Sample Title", description: "Sample description for the project.", image_url: "https://via.placeholder.com/150", project_url: "https://www.xiaoyuzhoufm.com/episode/665faf066488b5dec3b8b28d", timestamp: Date(), takeaways: ["This is a sample takeaway.", "Another takeaway."]))
         .environmentObject(FirestoreManager())
 }
 
+extension UIView {
+    var snapshot: UIImage? {
+        UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0)
+        defer { UIGraphicsEndImageContext() }
+        drawHierarchy(in: bounds, afterScreenUpdates: true)
+        return UIGraphicsGetImageFromCurrentImageContext()
+    }
+}

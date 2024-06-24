@@ -20,6 +20,13 @@
 		9E1C03882C1985B200CD93D7 /* AddPodcastAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1C03872C1985B200CD93D7 /* AddPodcastAlertView.swift */; };
 		9E2CE0822C22CDCE008D4391 /* TakeawayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2CE0812C22CDCE008D4391 /* TakeawayView.swift */; };
 		9E2CE0842C22DED5008D4391 /* AddTakeawayAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2CE0832C22DED5008D4391 /* AddTakeawayAlertView.swift */; };
+		9E71C87C2C29F48F008FDC66 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E71C87B2C29F48F008FDC66 /* Project.swift */; };
+		9E71C87E2C29F5F0008FDC66 /* CommentProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E71C87D2C29F5F0008FDC66 /* CommentProject.swift */; };
+		9E71C8802C29F766008FDC66 /* CommentProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E71C87F2C29F766008FDC66 /* CommentProjectView.swift */; };
+		9E71C8822C29F903008FDC66 /* AddProjectAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E71C8812C29F903008FDC66 /* AddProjectAlertView.swift */; };
+		9E71C8842C29F96C008FDC66 /* ProjectDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E71C8832C29F96C008FDC66 /* ProjectDetailView.swift */; };
+		9E71C8862C29FC18008FDC66 /* ProjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E71C8852C29FC18008FDC66 /* ProjectListView.swift */; };
+		9E71C8882C29FCC6008FDC66 /* ProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E71C8872C29FCC6008FDC66 /* ProjectView.swift */; };
 		9E77E1142C1E97BE0098D255 /* AddBookAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E77E1132C1E97BE0098D255 /* AddBookAlertView.swift */; };
 		9E77E1162C1EA7B40098D255 /* AddCourseAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E77E1152C1EA7B40098D255 /* AddCourseAlertView.swift */; };
 		9E77E1182C1EF6050098D255 /* AddArticleAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E77E1172C1EF6050098D255 /* AddArticleAlertView.swift */; };
@@ -75,6 +82,13 @@
 		9E2CE0812C22CDCE008D4391 /* TakeawayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeawayView.swift; sourceTree = "<group>"; };
 		9E2CE0832C22DED5008D4391 /* AddTakeawayAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTakeawayAlertView.swift; sourceTree = "<group>"; };
 		9E2CFC3D2C10518B00B38A27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		9E71C87B2C29F48F008FDC66 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		9E71C87D2C29F5F0008FDC66 /* CommentProject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentProject.swift; sourceTree = "<group>"; };
+		9E71C87F2C29F766008FDC66 /* CommentProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentProjectView.swift; sourceTree = "<group>"; };
+		9E71C8812C29F903008FDC66 /* AddProjectAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectAlertView.swift; sourceTree = "<group>"; };
+		9E71C8832C29F96C008FDC66 /* ProjectDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDetailView.swift; sourceTree = "<group>"; };
+		9E71C8852C29FC18008FDC66 /* ProjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListView.swift; sourceTree = "<group>"; };
+		9E71C8872C29FCC6008FDC66 /* ProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectView.swift; sourceTree = "<group>"; };
 		9E77E1132C1E97BE0098D255 /* AddBookAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBookAlertView.swift; sourceTree = "<group>"; };
 		9E77E1152C1EA7B40098D255 /* AddCourseAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCourseAlertView.swift; sourceTree = "<group>"; };
 		9E77E1172C1EF6050098D255 /* AddArticleAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddArticleAlertView.swift; sourceTree = "<group>"; };
@@ -138,6 +152,7 @@
 				9E019FD42C1239E600AF8949 /* BookView.swift */,
 				9E019FD62C1239F300AF8949 /* PodcastView.swift */,
 				9ED42B8E2C1832F200F5366F /* CourseView.swift */,
+				9E71C8872C29FCC6008FDC66 /* ProjectView.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -201,11 +216,13 @@
 				9EC54B152C15809600F8ADC9 /* Book.swift */,
 				9EC54B1B2C15979700F8ADC9 /* Podcast.swift */,
 				9E1C03832C193F7100CD93D7 /* Course.swift */,
+				9E71C87B2C29F48F008FDC66 /* Project.swift */,
 				9EEB4BA02C1D667C00A40ADB /* CommentArticle.swift */,
 				9EEB4BA82C1D771D00A40ADB /* CommentVideo.swift */,
 				9EEB4BAC2C1D783C00A40ADB /* CommnetBook.swift */,
 				9EEB4BB02C1D791100A40ADB /* CommentPodcast.swift */,
 				9EEB4BB42C1D79D100A40ADB /* CommentCourse.swift */,
+				9E71C87D2C29F5F0008FDC66 /* CommentProject.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -230,17 +247,21 @@
 				9EC54B192C15922500F8ADC9 /* PodcastDetailView.swift */,
 				9E1C037F2C19398600CD93D7 /* CourseListView.swift */,
 				9E1C03812C19399500CD93D7 /* CourseDetailView.swift */,
+				9E71C8852C29FC18008FDC66 /* ProjectListView.swift */,
+				9E71C8832C29F96C008FDC66 /* ProjectDetailView.swift */,
 				9E77E1172C1EF6050098D255 /* AddArticleAlertView.swift */,
 				9E1C03852C19819A00CD93D7 /* AddVideoAlertView.swift */,
 				9E77E1132C1E97BE0098D255 /* AddBookAlertView.swift */,
 				9E1C03872C1985B200CD93D7 /* AddPodcastAlertView.swift */,
 				9E77E1152C1EA7B40098D255 /* AddCourseAlertView.swift */,
+				9E71C8812C29F903008FDC66 /* AddProjectAlertView.swift */,
 				9E2CE0832C22DED5008D4391 /* AddTakeawayAlertView.swift */,
 				9EEB4BA42C1D689900A40ADB /* CommentArticleView.swift */,
 				9EEB4BAA2C1D777400A40ADB /* CommentVideoView.swift */,
 				9EEB4BAE2C1D785E00A40ADB /* CommentBookView.swift */,
 				9EEB4BB22C1D795200A40ADB /* CommentPodcastView.swift */,
 				9EEB4BB62C1D79E400A40ADB /* CommentCourseView.swift */,
+				9E71C87F2C29F766008FDC66 /* CommentProjectView.swift */,
 				9E2CE0812C22CDCE008D4391 /* TakeawayView.swift */,
 			);
 			path = View;
@@ -333,28 +354,35 @@
 			buildActionMask = 2147483647;
 			files = (
 				9EC54B162C15809600F8ADC9 /* Book.swift in Sources */,
+				9E71C87E2C29F5F0008FDC66 /* CommentProject.swift in Sources */,
+				9E71C8842C29F96C008FDC66 /* ProjectDetailView.swift in Sources */,
 				9EC969122C14580300AD0B0F /* ArticleDetailView.swift in Sources */,
 				9EEB4BB72C1D79E400A40ADB /* CommentCourseView.swift in Sources */,
 				9E019FD32C1239D300AF8949 /* VideoView.swift in Sources */,
 				9E77E1142C1E97BE0098D255 /* AddBookAlertView.swift in Sources */,
 				9EC9690C2C144C6400AD0B0F /* ArticleListView.swift in Sources */,
 				9EC54B1A2C15922500F8ADC9 /* PodcastDetailView.swift in Sources */,
+				9E71C87C2C29F48F008FDC66 /* Project.swift in Sources */,
 				9EEB4BAF2C1D785E00A40ADB /* CommentBookView.swift in Sources */,
 				9E1C03862C19819A00CD93D7 /* AddVideoAlertView.swift in Sources */,
 				9EC968FE2C14443000AD0B0F /* FirestoreManager.swift in Sources */,
 				9E019FD92C123A0100AF8949 /* MainView.swift in Sources */,
 				9ED42B8F2C1832F200F5366F /* CourseView.swift in Sources */,
 				9E1C03822C19399500CD93D7 /* CourseDetailView.swift in Sources */,
+				9E71C8882C29FCC6008FDC66 /* ProjectView.swift in Sources */,
 				9EEB4BA12C1D667C00A40ADB /* CommentArticle.swift in Sources */,
 				9E2CE0822C22CDCE008D4391 /* TakeawayView.swift in Sources */,
 				9EC54B122C157E8600F8ADC9 /* BookListView.swift in Sources */,
 				9E2CE0842C22DED5008D4391 /* AddTakeawayAlertView.swift in Sources */,
+				9E71C8802C29F766008FDC66 /* CommentProjectView.swift in Sources */,
 				9E1C03802C19398600CD93D7 /* CourseListView.swift in Sources */,
 				9EEB4BB52C1D79D100A40ADB /* CommentCourse.swift in Sources */,
 				9EC54B1C2C15979700F8ADC9 /* Podcast.swift in Sources */,
+				9E71C8822C29F903008FDC66 /* AddProjectAlertView.swift in Sources */,
 				9E019FD12C1239C800AF8949 /* BlogView.swift in Sources */,
 				9EEB4BB12C1D791100A40ADB /* CommentPodcast.swift in Sources */,
 				9EEB4BA92C1D771D00A40ADB /* CommentVideo.swift in Sources */,
+				9E71C8862C29FC18008FDC66 /* ProjectListView.swift in Sources */,
 				9EC54B142C157E9400F8ADC9 /* BookDetailView.swift in Sources */,
 				9EC969042C14448D00AD0B0F /* BlogArticle.swift in Sources */,
 				9EC54B062C14FABA00F8ADC9 /* Video.swift in Sources */,
@@ -504,7 +532,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = HowToLearn/HowToLearn.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"HowToLearn/Preview Content\"";
 				DEVELOPMENT_TEAM = 5VRM96JU8J;
 				ENABLE_PREVIEWS = YES;
@@ -522,7 +550,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = SoulAI.HowToLearn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -540,7 +568,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = HowToLearn/HowToLearn.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"HowToLearn/Preview Content\"";
 				DEVELOPMENT_TEAM = 5VRM96JU8J;
 				ENABLE_PREVIEWS = YES;
@@ -558,7 +586,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = SoulAI.HowToLearn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

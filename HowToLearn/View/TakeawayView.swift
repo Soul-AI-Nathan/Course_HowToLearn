@@ -13,6 +13,7 @@ enum ContentType {
     case book
     case podcast
     case course
+    case project
 }
 
 struct TakeawayView: View {
@@ -69,6 +70,8 @@ struct TakeawayView: View {
                 firestoreManager.removeTakeawayFromPodcast(podcastID: itemID, takeaway: takeaway)
             case .course:
                 firestoreManager.removeTakeawayFromCourse(courseID: itemID, takeaway: takeaway)
+            case .project:
+                firestoreManager.removeTakeawayFromProject(projectID: itemID, takeaway: takeaway)
             }
         }
     }
@@ -78,6 +81,3 @@ struct TakeawayView: View {
     TakeawayView(itemID: "1", contentType: .article, takeaways: .constant(["This is a sample takeaway.", "Another takeaway."]))
         .environmentObject(FirestoreManager())
 }
-
-
-
