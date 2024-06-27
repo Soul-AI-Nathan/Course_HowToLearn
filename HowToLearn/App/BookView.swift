@@ -22,13 +22,13 @@ struct BookView: View {
                             NavigationLink(value: book) {
                                 BookListView(book: book)
                             }
-//                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-//                                Button(role: .destructive) {
-//                                    deleteBook(book: book)
-//                                } label: {
-//                                    Label("Delete", systemImage: "trash")
-//                                }
-//                            }
+                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                Button(role: .destructive) {
+                                    deleteBook(book: book)
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                            }
                         }
                     }
                 }

@@ -52,7 +52,7 @@ struct PodcastDetailView: View {
                         .background(
                             Color.accentColor
                                 .frame(height: 6)
-                                .offset(y: 40)
+                                .offset(y: 30)
                         )
 
                     Text(podcast.description)
