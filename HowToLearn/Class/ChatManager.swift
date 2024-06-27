@@ -8,7 +8,7 @@
 import FirebaseFirestore
 import FirebaseAuth
 
-struct Message: Identifiable {
+struct Message: Identifiable, Equatable {
     var id: String
     var text: String
     var isCurrentUser: Bool
@@ -55,6 +55,14 @@ class ChatManager: ObservableObject {
         db.collection("messages").addDocument(data: message) { error in
             if let error = error {
                 print("Error adding document: \(error)")
+            }
+        }
+    }
+    
+    func deleteMessage(id: String) {
+        db.collection("messages").document(id).delete { error in
+            if let error = error {
+                print("Error deleting message: \(error)")
             }
         }
     }

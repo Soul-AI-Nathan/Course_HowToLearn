@@ -22,42 +22,42 @@ struct ProjectView: View {
                             NavigationLink(value: project) {
                                 ProjectListView(project: project)
                             }
-//                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-//                                Button(role: .destructive) {
-//                                    deleteProject(project: project)
-//                                } label: {
-//                                    Label("Delete", systemImage: "trash")
-//                                }
-//                            }
+                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                Button(role: .destructive) {
+                                    deleteProject(project: project)
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                            }
                         }
                     }
                 }
             }
             .navigationTitle("Project")
-//            .navigationBarItems(trailing: Button(action: {
-//                withAnimation {
-//                    showAddProjectAlert.toggle()
-//                }
-//            }) {
-//                Image(systemName: "plus")
-//            })
+            .navigationBarItems(trailing: Button(action: {
+                withAnimation {
+                    showAddProjectAlert.toggle()
+                }
+            }) {
+                Image(systemName: "plus")
+            })
             .navigationDestination(for: Project.self) { project in
                 ProjectDetailView(project: project)
             }
-//            .overlay(
-//                Group {
-//                    if showAddProjectAlert {
-//                        AddProjectAlertView(isPresented: $showAddProjectAlert, projectURL: $newProjectURL) {
-//                            addNewProject(url: newProjectURL)
-//                            newProjectURL = ""
-//                        }
-//                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                        .background(Color.black.opacity(0.4).edgesIgnoringSafeArea(.all))
-//                        .transition(.opacity)
-//                        .animation(.easeInOut, value: showAddProjectAlert)
-//                    }
-//                }
-//            )
+            .overlay(
+                Group {
+                    if showAddProjectAlert {
+                        AddProjectAlertView(isPresented: $showAddProjectAlert, projectURL: $newProjectURL) {
+                            addNewProject(url: newProjectURL)
+                            newProjectURL = ""
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .background(Color.black.opacity(0.4).edgesIgnoringSafeArea(.all))
+                        .transition(.opacity)
+                        .animation(.easeInOut, value: showAddProjectAlert)
+                    }
+                }
+            )
         }
     }
 

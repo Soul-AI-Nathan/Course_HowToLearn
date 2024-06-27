@@ -5,6 +5,12 @@
 //  Created by How on 6/6/24.
 //
 
+// MainView.swift
+// HowToLearn
+//
+// Created by How on 6/6/24.
+//
+
 import SwiftUI
 
 struct MainView: View {
@@ -35,14 +41,6 @@ struct MainView: View {
 
             NavigationView {
                 VStack {
-                    Picker("Select Category", selection: $selectedSegment) {
-                        Text("Video").tag(0)
-                        Text("Book").tag(1)
-                        Text("Podcast").tag(2)
-                    }
-                    .pickerStyle(SegmentedPickerStyle())
-                    .padding()
-
                     if selectedSegment == 0 {
                         VideoView()
                     } else if selectedSegment == 1 {
@@ -58,6 +56,19 @@ struct MainView: View {
                         label: { EmptyView() }
                     )
                     .hidden()
+                )
+                .overlay(
+                    VStack {
+                        Spacer()
+                        Picker("Select Category", selection: $selectedSegment) {
+                            Text("Video").tag(0)
+                            Text("Book").tag(1)
+                            Text("Podcast").tag(2)
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                        .padding()
+                        .background(Color(UIColor.systemBackground).edgesIgnoringSafeArea(.bottom))
+                    }
                 )
             }
             .tabItem {
@@ -99,7 +110,7 @@ struct MainView: View {
                 Text("Project")
             }
             .tag(3)
-            
+
             NavigationView {
                 ChatView()
             }
@@ -182,3 +193,4 @@ struct MainView: View {
 #Preview {
     MainView()
 }
+
