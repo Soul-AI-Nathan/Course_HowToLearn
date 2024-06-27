@@ -23,43 +23,43 @@ struct BlogView: View {
                             NavigationLink(value: article) {
                                 ArticleListView(article: article)
                             }
-                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                                Button(role: .destructive) {
-                                    deleteArticle(article: article)
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
-                                }
-                            }
+//                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+//                                Button(role: .destructive) {
+//                                    deleteArticle(article: article)
+//                                } label: {
+//                                    Label("Delete", systemImage: "trash")
+//                                }
+//                            }
                         }
                     }
                 }
             }
             .navigationTitle("Blog")
-            .navigationBarItems(trailing: Button(action: {
-                withAnimation {
-                    showAddArticleAlert.toggle()
-                }
-            }) {
-                Image(systemName: "plus")
-            })
+//            .navigationBarItems(trailing: Button(action: {
+//                withAnimation {
+//                    showAddArticleAlert.toggle()
+//                }
+//            }) {
+//                Image(systemName: "plus")
+//            })
             .navigationDestination(for: BlogArticle.self) { article in
                 ArticleDetailView(article: article)
             }
-            .overlay(
-                Group {
-                    if showAddArticleAlert {
-                        AddArticleAlertView(isPresented: $showAddArticleAlert, articleTitle: $newArticleTitle, articleContent: $newArticleContent) {
-                            addNewArticle(title: newArticleTitle, content: newArticleContent)
-                            newArticleTitle = ""
-                            newArticleContent = ""
-                        }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .background(Color.black.opacity(0.4).edgesIgnoringSafeArea(.all))
-                        .transition(.opacity)
-                        .animation(.easeInOut, value: showAddArticleAlert)
-                    }
-                }
-            )
+//            .overlay(
+//                Group {
+//                    if showAddArticleAlert {
+//                        AddArticleAlertView(isPresented: $showAddArticleAlert, articleTitle: $newArticleTitle, articleContent: $newArticleContent) {
+//                            addNewArticle(title: newArticleTitle, content: newArticleContent)
+//                            newArticleTitle = ""
+//                            newArticleContent = ""
+//                        }
+//                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                        .background(Color.black.opacity(0.4).edgesIgnoringSafeArea(.all))
+//                        .transition(.opacity)
+//                        .animation(.easeInOut, value: showAddArticleAlert)
+//                    }
+//                }
+//            )
         }
     }
 

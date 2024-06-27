@@ -22,42 +22,42 @@ struct BookView: View {
                             NavigationLink(value: book) {
                                 BookListView(book: book)
                             }
-                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                                Button(role: .destructive) {
-                                    deleteBook(book: book)
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
-                                }
-                            }
+//                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+//                                Button(role: .destructive) {
+//                                    deleteBook(book: book)
+//                                } label: {
+//                                    Label("Delete", systemImage: "trash")
+//                                }
+//                            }
                         }
                     }
                 }
             }
             .navigationTitle("Book")
-            .navigationBarItems(trailing: Button(action: {
-                withAnimation {
-                    showAddBookAlert.toggle()
-                }
-            }) {
-                Image(systemName: "plus")
-            })
+//            .navigationBarItems(trailing: Button(action: {
+//                withAnimation {
+//                    showAddBookAlert.toggle()
+//                }
+//            }) {
+//                Image(systemName: "plus")
+//            })
             .navigationDestination(for: Book.self) { book in
                 BookDetailView(book: book)
             }
-            .overlay(
-                Group {
-                    if showAddBookAlert {
-                        AddBookAlertView(isPresented: $showAddBookAlert, bookURL: $newBookURL) {
-                            addNewBook(url: newBookURL)
-                            newBookURL = ""
-                        }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .background(Color.black.opacity(0.4).edgesIgnoringSafeArea(.all))
-                        .transition(.opacity)
-                        .animation(.easeInOut, value: showAddBookAlert)
-                    }
-                }
-            )
+//            .overlay(
+//                Group {
+//                    if showAddBookAlert {
+//                        AddBookAlertView(isPresented: $showAddBookAlert, bookURL: $newBookURL) {
+//                            addNewBook(url: newBookURL)
+//                            newBookURL = ""
+//                        }
+//                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                        .background(Color.black.opacity(0.4).edgesIgnoringSafeArea(.all))
+//                        .transition(.opacity)
+//                        .animation(.easeInOut, value: showAddBookAlert)
+//                    }
+//                }
+//            )
         }
     }
 

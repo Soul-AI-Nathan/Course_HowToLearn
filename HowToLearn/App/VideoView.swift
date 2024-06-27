@@ -22,42 +22,42 @@ struct VideoView: View {
                             NavigationLink(value: video) {
                                 VideoListView(video: video)
                             }
-                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                                Button(role: .destructive) {
-                                    deleteVideo(video: video)
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
-                                }
-                            }
+//                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+//                                Button(role: .destructive) {
+//                                    deleteVideo(video: video)
+//                                } label: {
+//                                    Label("Delete", systemImage: "trash")
+//                                }
+//                            }
                         }
                     }
                 }
             }
             .navigationTitle("Video")
-            .navigationBarItems(trailing: Button(action: {
-                withAnimation {
-                    showAddVideoAlert.toggle()
-                }
-            }) {
-                Image(systemName: "plus")
-            })
+//            .navigationBarItems(trailing: Button(action: {
+//                withAnimation {
+//                    showAddVideoAlert.toggle()
+//                }
+//            }) {
+//                Image(systemName: "plus")
+//            })
             .navigationDestination(for: Video.self) { video in
                 VideoDetailView(video: video)
             }
-            .overlay(
-                Group {
-                    if showAddVideoAlert {
-                        AddVideoAlertView(isPresented: $showAddVideoAlert, videoURL: $newVideoURL) {
-                            addNewVideo(url: newVideoURL)
-                            newVideoURL = ""
-                        }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .background(Color.black.opacity(0.4).edgesIgnoringSafeArea(.all))
-                        .transition(.opacity)
-                        .animation(.easeInOut, value: showAddVideoAlert)
-                    }
-                }
-            )
+//            .overlay(
+//                Group {
+//                    if showAddVideoAlert {
+//                        AddVideoAlertView(isPresented: $showAddVideoAlert, videoURL: $newVideoURL) {
+//                            addNewVideo(url: newVideoURL)
+//                            newVideoURL = ""
+//                        }
+//                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                        .background(Color.black.opacity(0.4).edgesIgnoringSafeArea(.all))
+//                        .transition(.opacity)
+//                        .animation(.easeInOut, value: showAddVideoAlert)
+//                    }
+//                }
+//            )
         }
     }
 

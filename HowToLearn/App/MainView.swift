@@ -99,6 +99,15 @@ struct MainView: View {
                 Text("Project")
             }
             .tag(3)
+            
+            NavigationView {
+                ChatView()
+            }
+            .tabItem {
+                Image(systemName: "message")
+                Text("Chat")
+            }
+            .tag(4)
         }
         .onAppear {
             NotificationCenter.default.addObserver(forName: .didReceiveDeepLink, object: nil, queue: .main) { notification in

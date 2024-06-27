@@ -87,6 +87,7 @@ class FirestoreManager: ObservableObject {
                 print("Error adding takeaway to article: \(error.localizedDescription)")
             } else {
                 print("Takeaway successfully added to article")
+                self.sendTakeawayNotification(type: "Article", id: articleID, takeaway: takeaway)
             }
         }
     }
@@ -170,6 +171,7 @@ class FirestoreManager: ObservableObject {
                 print("Error adding takeaway to video: \(error.localizedDescription)")
             } else {
                 print("Takeaway successfully added to video")
+                self.sendTakeawayNotification(type: "Video", id: videoID, takeaway: takeaway)
             }
         }
     }
@@ -254,6 +256,7 @@ class FirestoreManager: ObservableObject {
                 print("Error adding takeaway to book: \(error.localizedDescription)")
             } else {
                 print("Takeaway successfully added to book")
+                self.sendTakeawayNotification(type: "Book", id: bookID, takeaway: takeaway)
             }
         }
     }
@@ -338,6 +341,7 @@ class FirestoreManager: ObservableObject {
                 print("Error adding takeaway to podcast: \(error.localizedDescription)")
             } else {
                 print("Takeaway successfully added to podcast")
+                self.sendTakeawayNotification(type: "Podcast", id: podcastID, takeaway: takeaway)
             }
         }
     }
@@ -422,6 +426,7 @@ class FirestoreManager: ObservableObject {
                 print("Error adding takeaway to course: \(error.localizedDescription)")
             } else {
                 print("Takeaway successfully added to course")
+                self.sendTakeawayNotification(type: "Course", id: courseID, takeaway: takeaway)
             }
         }
     }
@@ -506,6 +511,7 @@ class FirestoreManager: ObservableObject {
                 print("Error adding takeaway to project: \(error.localizedDescription)")
             } else {
                 print("Takeaway successfully added to project")
+                self.sendTakeawayNotification(type: "Project", id: projectID, takeaway: takeaway)
             }
         }
     }
@@ -561,5 +567,28 @@ class FirestoreManager: ObservableObject {
             }
         }
     }
-}
 
+    private func sendTakeawayNotification(type: String, id: String, takeaway: String) {
+        let content = UNMutableNotificationContent()
+        content.title = "New Takeaway Added"
+        content.body = takeaway
+        content.sound = .default
+        
+        // Create the URL for the notification
+        var urlComponents = URLComponents()
+        urlComponents.scheme = "howtolearn"
+        urlComponents.host = type.lowercased()
+        urlComponents.queryItems = [URLQueryItem(name: "id", value: id)]
+        
+        if let url = urlComponents.url {
+            content.userInfo = ["url": url.absoluteString]
+        }
+
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)
+        UNUserNotificationCenter.current().add(request) { error in
+            if let error = error {
+                print("Error adding notification: \(error)")
+            }
+        }
+    }
+}

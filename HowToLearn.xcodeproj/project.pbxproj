@@ -33,6 +33,10 @@
 		9EA33B1A2C104B0A003BAA4E /* HowToLearnApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA33B192C104B0A003BAA4E /* HowToLearnApp.swift */; };
 		9EA33B1E2C104B0C003BAA4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EA33B1D2C104B0C003BAA4E /* Assets.xcassets */; };
 		9EA33B212C104B0C003BAA4E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EA33B202C104B0C003BAA4E /* Preview Assets.xcassets */; };
+		9EB39E012C2D49EF00924305 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB39E002C2D49EF00924305 /* ChatView.swift */; };
+		9EB39E032C2D4A0B00924305 /* ChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB39E022C2D4A0B00924305 /* ChatManager.swift */; };
+		9EB39E052C2D4C9200924305 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 9EB39E042C2D4C9200924305 /* FirebaseAuth */; };
+		9EB39E072C2D4CFB00924305 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EB39E062C2D4CFB00924305 /* AuthManager.swift */; };
 		9EC54B042C14D8E500F8ADC9 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 9EC54B032C14D8E500F8ADC9 /* FirebaseStorage */; };
 		9EC54B062C14FABA00F8ADC9 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC54B052C14FAB900F8ADC9 /* Video.swift */; };
 		9EC54B082C14FAF000F8ADC9 /* VideoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC54B072C14FAF000F8ADC9 /* VideoListView.swift */; };
@@ -96,6 +100,9 @@
 		9EA33B192C104B0A003BAA4E /* HowToLearnApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowToLearnApp.swift; sourceTree = "<group>"; };
 		9EA33B1D2C104B0C003BAA4E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9EA33B202C104B0C003BAA4E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		9EB39E002C2D49EF00924305 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		9EB39E022C2D4A0B00924305 /* ChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManager.swift; sourceTree = "<group>"; };
+		9EB39E062C2D4CFB00924305 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		9EC54B052C14FAB900F8ADC9 /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		9EC54B072C14FAF000F8ADC9 /* VideoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListView.swift; sourceTree = "<group>"; };
 		9EC54B092C14FBE200F8ADC9 /* VideoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDetailView.swift; sourceTree = "<group>"; };
@@ -135,6 +142,7 @@
 				9EC969072C14453E00AD0B0F /* FirebaseFirestoreSwift in Frameworks */,
 				9EC54B0D2C150B5B00F8ADC9 /* YouTubePlayerKit in Frameworks */,
 				9EC54B042C14D8E500F8ADC9 /* FirebaseStorage in Frameworks */,
+				9EB39E052C2D4C9200924305 /* FirebaseAuth in Frameworks */,
 				9EC54B102C155FEB00F8ADC9 /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -153,6 +161,7 @@
 				9E019FD62C1239F300AF8949 /* PodcastView.swift */,
 				9ED42B8E2C1832F200F5366F /* CourseView.swift */,
 				9E71C8872C29FCC6008FDC66 /* ProjectView.swift */,
+				9EB39E002C2D49EF00924305 /* ChatView.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -204,6 +213,8 @@
 			isa = PBXGroup;
 			children = (
 				9EC968FD2C14443000AD0B0F /* FirestoreManager.swift */,
+				9EB39E022C2D4A0B00924305 /* ChatManager.swift */,
+				9EB39E062C2D4CFB00924305 /* AuthManager.swift */,
 			);
 			path = Class;
 			sourceTree = "<group>";
@@ -290,6 +301,7 @@
 				9EC54B0C2C150B5B00F8ADC9 /* YouTubePlayerKit */,
 				9EC54B0F2C155FEB00F8ADC9 /* SwiftSoup */,
 				9EEB4B9D2C1D187500A40ADB /* FirebaseMessaging */,
+				9EB39E042C2D4C9200924305 /* FirebaseAuth */,
 			);
 			productName = HowToLearn;
 			productReference = 9EA33B162C104B0A003BAA4E /* HowToLearn.app */;
@@ -357,6 +369,7 @@
 				9E71C87E2C29F5F0008FDC66 /* CommentProject.swift in Sources */,
 				9E71C8842C29F96C008FDC66 /* ProjectDetailView.swift in Sources */,
 				9EC969122C14580300AD0B0F /* ArticleDetailView.swift in Sources */,
+				9EB39E012C2D49EF00924305 /* ChatView.swift in Sources */,
 				9EEB4BB72C1D79E400A40ADB /* CommentCourseView.swift in Sources */,
 				9E019FD32C1239D300AF8949 /* VideoView.swift in Sources */,
 				9E77E1142C1E97BE0098D255 /* AddBookAlertView.swift in Sources */,
@@ -384,6 +397,7 @@
 				9EEB4BA92C1D771D00A40ADB /* CommentVideo.swift in Sources */,
 				9E71C8862C29FC18008FDC66 /* ProjectListView.swift in Sources */,
 				9EC54B142C157E9400F8ADC9 /* BookDetailView.swift in Sources */,
+				9EB39E032C2D4A0B00924305 /* ChatManager.swift in Sources */,
 				9EC969042C14448D00AD0B0F /* BlogArticle.swift in Sources */,
 				9EC54B062C14FABA00F8ADC9 /* Video.swift in Sources */,
 				9EEB4BA52C1D689900A40ADB /* CommentArticleView.swift in Sources */,
@@ -400,6 +414,7 @@
 				9EA33B1A2C104B0A003BAA4E /* HowToLearnApp.swift in Sources */,
 				9E019FD52C1239E600AF8949 /* BookView.swift in Sources */,
 				9E1C03842C193F7100CD93D7 /* Course.swift in Sources */,
+				9EB39E072C2D4CFB00924305 /* AuthManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -538,7 +553,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HowToLearn/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "How学（控制台）";
+				INFOPLIST_KEY_CFBundleDisplayName = "How学";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -550,7 +565,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = SoulAI.HowToLearn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -574,7 +589,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HowToLearn/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "How学（控制台）";
+				INFOPLIST_KEY_CFBundleDisplayName = "How学";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -586,7 +601,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = SoulAI.HowToLearn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -648,6 +663,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		9EB39E042C2D4C9200924305 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9EC968F92C14427400AD0B0F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
 		9EC54B032C14D8E500F8ADC9 /* FirebaseStorage */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9EC968F92C14427400AD0B0F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

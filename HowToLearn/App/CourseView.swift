@@ -22,42 +22,42 @@ struct CourseView: View {
                             NavigationLink(value: course) {
                                 CourseListView(course: course)
                             }
-                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                                Button(role: .destructive) {
-                                    deleteCourse(course: course)
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
-                                }
-                            }
+//                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+//                                Button(role: .destructive) {
+//                                    deleteCourse(course: course)
+//                                } label: {
+//                                    Label("Delete", systemImage: "trash")
+//                                }
+//                            }
                         }
                     }
                 }
             }
             .navigationTitle("Course")
-            .navigationBarItems(trailing: Button(action: {
-                withAnimation {
-                    showAddCourseAlert.toggle()
-                }
-            }) {
-                Image(systemName: "plus")
-            })
+//            .navigationBarItems(trailing: Button(action: {
+//                withAnimation {
+//                    showAddCourseAlert.toggle()
+//                }
+//            }) {
+//                Image(systemName: "plus")
+//            })
             .navigationDestination(for: Course.self) { course in
                 CourseDetailView(course: course)
             }
-            .overlay(
-                Group {
-                    if showAddCourseAlert {
-                        AddCourseAlertView(isPresented: $showAddCourseAlert, courseURL: $newCourseURL) {
-                            addNewCourse(url: newCourseURL)
-                            newCourseURL = ""
-                        }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .background(Color.black.opacity(0.4).edgesIgnoringSafeArea(.all))
-                        .transition(.opacity)
-                        .animation(.easeInOut, value: showAddCourseAlert)
-                    }
-                }
-            )
+//            .overlay(
+//                Group {
+//                    if showAddCourseAlert {
+//                        AddCourseAlertView(isPresented: $showAddCourseAlert, courseURL: $newCourseURL) {
+//                            addNewCourse(url: newCourseURL)
+//                            newCourseURL = ""
+//                        }
+//                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                        .background(Color.black.opacity(0.4).edgesIgnoringSafeArea(.all))
+//                        .transition(.opacity)
+//                        .animation(.easeInOut, value: showAddCourseAlert)
+//                    }
+//                }
+//            )
         }
     }
 

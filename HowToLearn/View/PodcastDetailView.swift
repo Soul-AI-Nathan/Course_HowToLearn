@@ -80,13 +80,13 @@ struct PodcastDetailView: View {
                 }
                 .navigationBarTitle("Listen to \(podcast.title)", displayMode: .inline)
                 .navigationBarItems(trailing: HStack {
-                    Button(action: {
-                        withAnimation {
-                            showAddTakeawayAlert.toggle()
-                        }
-                    }) {
-                        Image(systemName: "plus")
-                    }
+//                    Button(action: {
+//                        withAnimation {
+//                            showAddTakeawayAlert.toggle()
+//                        }
+//                    }) {
+//                        Image(systemName: "plus")
+//                    }
                     Button(action: {
                         takeScreenshot()
                     }) {

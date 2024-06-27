@@ -90,6 +90,9 @@ struct HowToLearnApp: App {
         WindowGroup {
             MainView()
                 .environmentObject(firestoreManager)
+                .onAppear {
+                    AuthManager.shared.signInAnonymously()
+                }
         }
     }
 }

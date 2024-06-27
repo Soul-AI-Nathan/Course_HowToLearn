@@ -22,42 +22,42 @@ struct PodcastView: View {
                             NavigationLink(value: podcast) {
                                 PodcastListView(podcast: podcast)
                             }
-                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                                Button(role: .destructive) {
-                                    deletePodcast(podcast: podcast)
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
-                                }
-                            }
+//                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+//                                Button(role: .destructive) {
+//                                    deletePodcast(podcast: podcast)
+//                                } label: {
+//                                    Label("Delete", systemImage: "trash")
+//                                }
+//                            }
                         }
                     }
                 }
             }
             .navigationTitle("Podcast")
-            .navigationBarItems(trailing: Button(action: {
-                withAnimation {
-                    showAddPodcastAlert.toggle()
-                }
-            }) {
-                Image(systemName: "plus")
-            })
+//            .navigationBarItems(trailing: Button(action: {
+//                withAnimation {
+//                    showAddPodcastAlert.toggle()
+//                }
+//            }) {
+//                Image(systemName: "plus")
+//            })
             .navigationDestination(for: Podcast.self) { podcast in
                 PodcastDetailView(podcast: podcast)
             }
-            .overlay(
-                Group {
-                    if showAddPodcastAlert {
-                        AddPodcastAlertView(isPresented: $showAddPodcastAlert, podcastURL: $newPodcastURL) {
-                            addNewPodcast(url: newPodcastURL)
-                            newPodcastURL = ""
-                        }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .background(Color.black.opacity(0.4).edgesIgnoringSafeArea(.all))
-                        .transition(.opacity)
-                        .animation(.easeInOut, value: showAddPodcastAlert)
-                    }
-                }
-            )
+//            .overlay(
+//                Group {
+//                    if showAddPodcastAlert {
+//                        AddPodcastAlertView(isPresented: $showAddPodcastAlert, podcastURL: $newPodcastURL) {
+//                            addNewPodcast(url: newPodcastURL)
+//                            newPodcastURL = ""
+//                        }
+//                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                        .background(Color.black.opacity(0.4).edgesIgnoringSafeArea(.all))
+//                        .transition(.opacity)
+//                        .animation(.easeInOut, value: showAddPodcastAlert)
+//                    }
+//                }
+//            )
         }
     }
 
