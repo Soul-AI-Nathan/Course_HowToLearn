@@ -22,25 +22,25 @@ struct CourseView: View {
                             NavigationLink(value: course) {
                                 CourseListView(course: course)
                             }
-                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                                Button(role: .destructive) {
-                                    deleteCourse(course: course)
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
-                                }
-                            }
+//                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+//                                Button(role: .destructive) {
+//                                    deleteCourse(course: course)
+//                                } label: {
+//                                    Label("Delete", systemImage: "trash")
+//                                }
+//                            }
                         }
                     }
                 }
             }
             .navigationTitle("Course")
-            .navigationBarItems(trailing: Button(action: {
-                withAnimation {
-                    showAddCourseAlert.toggle()
-                }
-            }) {
-                Image(systemName: "plus")
-            })
+//            .navigationBarItems(trailing: Button(action: {
+//                withAnimation {
+//                    showAddCourseAlert.toggle()
+//                }
+//            }) {
+//                Image(systemName: "plus")
+//            })
             .navigationDestination(for: Course.self) { course in
                 CourseDetailView(course: course)
             }
@@ -59,6 +59,7 @@ struct CourseView: View {
                 }
             )
         }
+        .withTimer() // Apply the timer
     }
 
     private func addNewCourse(url: String) {

@@ -22,25 +22,26 @@ struct PodcastView: View {
                             NavigationLink(value: podcast) {
                                 PodcastListView(podcast: podcast)
                             }
-                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                                Button(role: .destructive) {
-                                    deletePodcast(podcast: podcast)
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
-                                }
-                            }
+//                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+//                                Button(role: .destructive) {
+//                                    deletePodcast(podcast: podcast)
+//                                } label: {
+//                                    Label("Delete", systemImage: "trash")
+//                                }
+//                            }
                         }
                     }
                 }
             }
+            .padding(.bottom, 50) // Add padding at the bottom to keep it above the tab bar
             .navigationTitle("Podcast")
-            .navigationBarItems(trailing: Button(action: {
-                withAnimation {
-                    showAddPodcastAlert.toggle()
-                }
-            }) {
-                Image(systemName: "plus")
-            })
+//            .navigationBarItems(trailing: Button(action: {
+//                withAnimation {
+//                    showAddPodcastAlert.toggle()
+//                }
+//            }) {
+//                Image(systemName: "plus")
+//            })
             .navigationDestination(for: Podcast.self) { podcast in
                 PodcastDetailView(podcast: podcast)
             }
@@ -59,10 +60,11 @@ struct PodcastView: View {
                 }
             )
         }
+        .withTimer() // Apply the timer
     }
 
     private func addNewPodcast(url: String) {
-        let newPodcast = Podcast(id: UUID().uuidString, title: "", description: "", image_url: "", podcast_url: url, timestamp: Date())
+        let newPodcast = Podcast(id: UUID().uuidString, title: "", description: "", image_url: "", podcast_url: url, audio_url: "", timestamp: Date())
         firestoreManager.addPodcast(newPodcast)
     }
 

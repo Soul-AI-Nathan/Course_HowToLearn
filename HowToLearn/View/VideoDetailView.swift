@@ -70,17 +70,17 @@ struct VideoDetailView: View {
 
                     // COMMENTS
                     CommentVideoView(videoID: video.id ?? "")
-                        .padding(.bottom, 10) // Add padding at the bottom to keep it above the tab bar
+                        .padding(.bottom, 40) // Add padding at the bottom to keep it above the tab bar
                 } //: VSTACK
                 .navigationBarTitle("Watch about \(video.title)", displayMode: .inline)
                 .navigationBarItems(trailing: HStack {
-                    Button(action: {
-                        withAnimation {
-                            showAddTakeawayAlert.toggle()
-                        }
-                    }) {
-                        Image(systemName: "plus")
-                    }
+//                    Button(action: {
+//                        withAnimation {
+//                            showAddTakeawayAlert.toggle()
+//                        }
+//                    }) {
+//                        Image(systemName: "plus")
+//                    }
                     Button(action: {
                         takeScreenshot()
                     }) {

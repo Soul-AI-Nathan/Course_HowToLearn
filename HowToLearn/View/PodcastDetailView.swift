@@ -39,9 +39,19 @@ struct PodcastDetailView: View {
                         }
                     }
 
-                    Text("点击图片收听")
-                        .font(.caption)
-                        .foregroundColor(.blue)
+                    if !podcast.audio_url.isEmpty {
+                        if let audioURL = URL(string: podcast.audio_url) {
+                            AudioPlayerView(audioURL: audioURL)
+                                .padding(.horizontal)
+                        } else {
+                            Text("Invalid audio URL")
+                                .foregroundColor(.red)
+                        }
+                    }
+
+//                    Text("点击图片进入原链接")
+//                        .font(.caption)
+//                        .foregroundColor(.blue)
 
                     Text(podcast.title.uppercased())
                         .font(.title3)
@@ -76,17 +86,17 @@ struct PodcastDetailView: View {
 
                     // COMMENTS
                     CommentPodcastView(podcastID: podcast.id ?? "")
-                        .padding(.bottom, 10) // Add padding at the bottom to keep it above the tab bar
+                        .padding(.bottom, 40) // Add padding at the bottom to keep it above the tab bar
                 }
                 .navigationBarTitle("Listen to \(podcast.title)", displayMode: .inline)
                 .navigationBarItems(trailing: HStack {
-                    Button(action: {
-                        withAnimation {
-                            showAddTakeawayAlert.toggle()
-                        }
-                    }) {
-                        Image(systemName: "plus")
-                    }
+//                    Button(action: {
+//                        withAnimation {
+//                            showAddTakeawayAlert.toggle()
+//                        }
+//                    }) {
+//                        Image(systemName: "plus")
+//                    }
                     Button(action: {
                         takeScreenshot()
                     }) {
@@ -166,7 +176,7 @@ struct PodcastDetailView: View {
 }
 
 #Preview {
-    PodcastDetailView(podcast: Podcast(id: "1", title: "Sample Title", description: "Sample description for the podcast.", image_url: "https://via.placeholder.com/150", podcast_url: "https://www.xiaoyuzhoufm.com/episode/665faf066488b5dec3b8b28d", timestamp: Date(), takeaways: ["This is a sample takeaway.", "Another takeaway."]))
+    PodcastDetailView(podcast: Podcast(id: "1", title: "Sample Title", description: "Sample description for the podcast.", image_url: "https://via.placeholder.com/150", podcast_url: "https://www.xiaoyuzhoufm.com/episode/665faf066488b5dec3b8b28d", audio_url: "https://media.xyzcdn.net/5e5c52c9418a84a04625e6cc/ljYaTy7r2zYK6iKDdSn0mA8oI5uh.mp3", timestamp: Date(), takeaways: ["This is a sample takeaway.", "Another takeaway."]))
         .environmentObject(FirestoreManager())
 }
 

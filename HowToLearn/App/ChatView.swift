@@ -27,13 +27,13 @@ struct ChatView: View {
                                 .cornerRadius(8)
                                 .foregroundColor(.white)
                                 .frame(maxWidth: .infinity, alignment: message.isCurrentUser ? .trailing : .leading)
-                                .contextMenu {
-                                    Button(action: {
-                                        chatManager.deleteMessage(id: message.id)
-                                    }) {
-                                        Label("Delete", systemImage: "trash")
-                                    }
-                                }
+//                                .contextMenu {
+//                                    Button(action: {
+//                                        chatManager.deleteMessage(id: message.id)
+//                                    }) {
+//                                        Label("Delete", systemImage: "trash")
+//                                    }
+//                                }
                         }
                     }
                     .padding()
@@ -105,6 +105,7 @@ struct ChatView: View {
                 print(result)
             }
         }
+        .withTimer() // Apply the timer
     }
 
     private func hideKeyboard() {

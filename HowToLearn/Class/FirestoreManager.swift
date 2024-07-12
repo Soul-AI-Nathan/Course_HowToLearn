@@ -311,6 +311,7 @@ class FirestoreManager: ObservableObject {
             "description": podcast.description,
             "image_url": podcast.image_url,
             "podcast_url": podcast.podcast_url,
+            "audio_url": podcast.audio_url,
             "timestamp": podcast.timestamp
         ]) { error in
             if let error = error {

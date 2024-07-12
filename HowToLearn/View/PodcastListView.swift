@@ -48,23 +48,23 @@ struct PodcastListView: View {
             }
         }
         .onAppear {
-            if podcast.title.isEmpty || podcast.description.isEmpty || podcast.image_url.isEmpty {
+            if podcast.title.isEmpty || podcast.description.isEmpty || podcast.image_url.isEmpty || podcast.audio_url.isEmpty {
                 fetchAndUpdatePodcastDetails()
             }
         }
     }
 
     private func fetchAndUpdatePodcastDetails() {
-        fetchPodcastDetails { title, description, imageUrl in
-            if let title = title, let description = description, let imageUrl = imageUrl {
-                updatePodcastInDatabase(title: title, description: description, imageUrl: imageUrl)
+        fetchPodcastDetails { title, description, imageUrl, audioUrl in
+            if let title = title, let description = description, let imageUrl = imageUrl, let audioUrl = audioUrl {
+                updatePodcastInDatabase(title: title, description: description, imageUrl: imageUrl, audioUrl: audioUrl)
             }
         }
     }
 
-    private func fetchPodcastDetails(completion: @escaping (String?, String?, String?) -> Void) {
+    private func fetchPodcastDetails(completion: @escaping (String?, String?, String?, String?) -> Void) {
         guard let url = URL(string: podcast.podcast_url) else {
-            completion(nil, nil, nil)
+            completion(nil, nil, nil, nil)
             return
         }
 
@@ -75,7 +75,7 @@ struct PodcastListView: View {
                 DispatchQueue.main.async {
                     isLoading = false
                 }
-                completion(nil, nil, nil)
+                completion(nil, nil, nil, nil)
                 return
             }
 
@@ -85,12 +85,12 @@ struct PodcastListView: View {
                 DispatchQueue.main.async {
                     isLoading = false
                 }
-                completion(nil, nil, nil)
+                completion(nil, nil, nil, nil)
             }
         }.resume()
     }
 
-    private func parseHTML(_ html: String, completion: @escaping (String?, String?, String?) -> Void) {
+    private func parseHTML(_ html: String, completion: @escaping (String?, String?, String?, String?) -> Void) {
         do {
             let document = try SwiftSoup.parse(html)
             
@@ -100,6 +100,9 @@ struct PodcastListView: View {
             // Extract title
             let title = try document.select("meta[property=og:title]").first()?.attr("content")
             
+            // Extract audio URL
+            let audioUrl = try document.select("meta[property=og:audio]").first()?.attr("content")
+            
             // Extract description from JSON-LD
             if let scriptElement = try document.select("script[type=application/ld+json]").first() {
                 let jsonString = try scriptElement.html()
@@ -108,7 +111,7 @@ struct PodcastListView: View {
                     let description = jsonObject?["description"] as? String
                     
                     DispatchQueue.main.async {
-                        completion(title, description, imgUrl)
+                        completion(title, description, imgUrl, audioUrl)
                         isLoading = false
                     }
                     return
@@ -119,7 +122,7 @@ struct PodcastListView: View {
             let description = try document.select("meta[name=description]").first()?.attr("content")
             
             DispatchQueue.main.async {
-                completion(title, description, imgUrl)
+                completion(title, description, imgUrl, audioUrl)
                 isLoading = false
             }
         } catch {
@@ -127,12 +130,11 @@ struct PodcastListView: View {
             DispatchQueue.main.async {
                 isLoading = false
             }
-            completion(nil, nil, nil)
+            completion(nil, nil, nil, nil)
         }
     }
 
-
-    private func updatePodcastInDatabase(title: String, description: String, imageUrl: String) {
+    private func updatePodcastInDatabase(title: String, description: String, imageUrl: String, audioUrl: String) {
         let db = Firestore.firestore()
         guard let podcastID = podcast.id else {
             print("Podcast ID is nil")
@@ -143,7 +145,8 @@ struct PodcastListView: View {
         document.updateData([
             "title": title,
             "description": description,
-            "image_url": imageUrl
+            "image_url": imageUrl,
+            "audio_url": audioUrl
         ]) { error in
             if let error = error {
                 print("Error updating document: \(error.localizedDescription)")
@@ -155,5 +158,5 @@ struct PodcastListView: View {
 }
 
 #Preview {
-    PodcastListView(podcast: Podcast(id: "1", title: "", description: "", image_url: "", podcast_url: "https://www.xiaoyuzhoufm.com/episode/665faf066488b5dec3b8b28d", timestamp: Date()))
+    PodcastListView(podcast: Podcast(id: "1", title: "", description: "", image_url: "", podcast_url: "https://www.xiaoyuzhoufm.com/episode/665faf066488b5dec3b8b28d", audio_url: "", timestamp: Date()))
 }

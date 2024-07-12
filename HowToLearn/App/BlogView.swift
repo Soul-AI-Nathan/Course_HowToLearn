@@ -23,25 +23,25 @@ struct BlogView: View {
                             NavigationLink(value: article) {
                                 ArticleListView(article: article)
                             }
-                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                                Button(role: .destructive) {
-                                    deleteArticle(article: article)
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
-                                }
-                            }
+//                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+//                                Button(role: .destructive) {
+//                                    deleteArticle(article: article)
+//                                } label: {
+//                                    Label("Delete", systemImage: "trash")
+//                                }
+//                            }
                         }
                     }
                 }
             }
             .navigationTitle("Blog")
-            .navigationBarItems(trailing: Button(action: {
-                withAnimation {
-                    showAddArticleAlert.toggle()
-                }
-            }) {
-                Image(systemName: "plus")
-            })
+//            .navigationBarItems(trailing: Button(action: {
+//                withAnimation {
+//                    showAddArticleAlert.toggle()
+//                }
+//            }) {
+//                Image(systemName: "plus")
+//            })
             .navigationDestination(for: BlogArticle.self) { article in
                 ArticleDetailView(article: article)
             }
@@ -61,6 +61,7 @@ struct BlogView: View {
                 }
             )
         }
+        .withTimer() // Apply the timer
     }
 
     private func addNewArticle(title: String, content: String) {

@@ -22,25 +22,25 @@ struct ProjectView: View {
                             NavigationLink(value: project) {
                                 ProjectListView(project: project)
                             }
-                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                                Button(role: .destructive) {
-                                    deleteProject(project: project)
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
-                                }
-                            }
+//                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+//                                Button(role: .destructive) {
+//                                    deleteProject(project: project)
+//                                } label: {
+//                                    Label("Delete", systemImage: "trash")
+//                                }
+//                            }
                         }
                     }
                 }
             }
             .navigationTitle("Project")
-            .navigationBarItems(trailing: Button(action: {
-                withAnimation {
-                    showAddProjectAlert.toggle()
-                }
-            }) {
-                Image(systemName: "plus")
-            })
+//            .navigationBarItems(trailing: Button(action: {
+//                withAnimation {
+//                    showAddProjectAlert.toggle()
+//                }
+//            }) {
+//                Image(systemName: "plus")
+//            })
             .navigationDestination(for: Project.self) { project in
                 ProjectDetailView(project: project)
             }
@@ -59,6 +59,7 @@ struct ProjectView: View {
                 }
             )
         }
+        .withTimer() // Apply the timer
     }
 
     private func addNewProject(url: String) {

@@ -85,11 +85,13 @@ struct HowToLearnApp: App {
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @StateObject private var firestoreManager = FirestoreManager()
+    @StateObject private var timerManager = TimerManager()
 
     var body: some Scene {
         WindowGroup {
             MainView()
                 .environmentObject(firestoreManager)
+                .environmentObject(timerManager)
                 .onAppear {
                     AuthManager.shared.signInAnonymously()
                 }

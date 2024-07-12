@@ -14,6 +14,7 @@ struct Podcast: Identifiable, Codable, Hashable {
     var description: String
     var image_url: String
     var podcast_url: String
+    var audio_url: String
     var timestamp: Date
     var takeaways: [String]?
 }
