@@ -10,12 +10,15 @@ import FirebaseFirestore
 
 struct PodcastDetailView: View {
     let podcast: Podcast
-    @State private var newTakeawayText = ""
+
     @State private var showAddTakeawayAlert = false
+    @State private var newTakeawayText = ""
     @State private var takeaways: [String]
     @EnvironmentObject var firestoreManager: FirestoreManager
     @State private var isShareSheetPresented = false
     @State private var screenshotImage: IdentifiableImage?
+    @State private var showAIResponse = false // State to show/hide the AI response pop-up
+    @StateObject private var audioModel = AudioModel() // Use AudioModel instead of AudioRecorderManager
 
     init(podcast: Podcast) {
         self.podcast = podcast
@@ -38,21 +41,7 @@ struct PodcastDetailView: View {
                             .frame(height: 300)
                         }
                     }
-
-                    if !podcast.audio_url.isEmpty {
-                        if let audioURL = URL(string: podcast.audio_url) {
-                            AudioPlayerView(audioURL: audioURL)
-                                .padding(.horizontal)
-                        } else {
-                            Text("Invalid audio URL")
-                                .foregroundColor(.red)
-                        }
-                    }
-
-//                    Text("点击图片进入原链接")
-//                        .font(.caption)
-//                        .foregroundColor(.blue)
-
+                    
                     Text(podcast.title.uppercased())
                         .font(.title3)
                         .fontWeight(.heavy)
@@ -62,16 +51,16 @@ struct PodcastDetailView: View {
                         .background(
                             Color.accentColor
                                 .frame(height: 6)
-                                .offset(y: 30)
+                                .offset(y: 24)
                         )
-
+                    
                     Text(podcast.description)
-                        .font(.body)
+                        .font(.headline)
                         .lineSpacing(9)
                         .multilineTextAlignment(.leading)
                         .foregroundColor(.black)
                         .padding(.horizontal)
-
+                    
                     // TAKEAWAY VIEW
                     if !takeaways.isEmpty {
                         VStack(alignment: .center, spacing: 5) {
@@ -80,30 +69,34 @@ struct PodcastDetailView: View {
                                 .foregroundColor(.primary)
                                 .padding(.top)
                             TakeawayView(itemID: podcast.id ?? "", contentType: .podcast, takeaways: $takeaways)
-                                .environmentObject(firestoreManager)
                         }
                     }
 
                     // COMMENTS
                     CommentPodcastView(podcastID: podcast.id ?? "")
                         .padding(.bottom, 40) // Add padding at the bottom to keep it above the tab bar
-                }
+                } //: VSTACK
                 .navigationBarTitle("Listen to \(podcast.title)", displayMode: .inline)
                 .navigationBarItems(trailing: HStack {
-//                    Button(action: {
-//                        withAnimation {
-//                            showAddTakeawayAlert.toggle()
-//                        }
-//                    }) {
-//                        Image(systemName: "plus")
-//                    }
+                    Button(action: {
+                        withAnimation {
+                            showAddTakeawayAlert.toggle()
+                        }
+                    }) {
+                        Image(systemName: "plus")
+                    }
                     Button(action: {
                         takeScreenshot()
                     }) {
                         Image(systemName: "square.and.arrow.up")
                     }
+                    Button(action: {
+                        showAIAudioView()
+                    }) {
+                        Image(systemName: "brain.head.profile")
+                    }
                 })
-            }
+            } //: SCROLL
 
             if showAddTakeawayAlert {
                 Color.black.opacity(0.4).edgesIgnoringSafeArea(.all)
@@ -114,6 +107,7 @@ struct PodcastDetailView: View {
                 .transition(.opacity)
                 .animation(.easeInOut, value: showAddTakeawayAlert)
             }
+
         }
         .onChange(of: showAddTakeawayAlert) { _ in
             if !showAddTakeawayAlert {
@@ -125,6 +119,9 @@ struct PodcastDetailView: View {
         }, content: { item in
             ShareSheet(activityItems: [item.image])
         })
+        .sheet(isPresented: $showAIResponse) {
+            AIAudioView(am: audioModel)
+        }
     }
 
     private func takeScreenshot() {
@@ -147,6 +144,20 @@ struct PodcastDetailView: View {
             } else {
                 print("Snapshot failed.")
             }
+        }
+    }
+
+    private func showAIAudioView() {
+        guard let window = UIApplication.shared.windows.first else {
+            print("No key window found.")
+            return
+        }
+
+        if let image = window.snapshot {
+            audioModel.processingImageTask = audioModel.processImageTask(image: image)
+            showAIResponse = true
+        } else {
+            print("Snapshot failed.")
         }
     }
 
@@ -173,10 +184,5 @@ struct PodcastDetailView: View {
             }
         }
     }
-}
-
-#Preview {
-    PodcastDetailView(podcast: Podcast(id: "1", title: "Sample Title", description: "Sample description for the podcast.", image_url: "https://via.placeholder.com/150", podcast_url: "https://www.xiaoyuzhoufm.com/episode/665faf066488b5dec3b8b28d", audio_url: "https://media.xyzcdn.net/5e5c52c9418a84a04625e6cc/ljYaTy7r2zYK6iKDdSn0mA8oI5uh.mp3", timestamp: Date(), takeaways: ["This is a sample takeaway.", "Another takeaway."]))
-        .environmentObject(FirestoreManager())
 }
 

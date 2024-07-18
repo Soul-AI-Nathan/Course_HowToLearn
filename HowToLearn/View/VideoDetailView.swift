@@ -22,6 +22,8 @@ struct VideoDetailView: View {
     @EnvironmentObject var firestoreManager: FirestoreManager
     @State private var isShareSheetPresented = false
     @State private var screenshotImage: IdentifiableImage?
+    @State private var showAIResponse = false // State to show/hide the AI response pop-up
+    @StateObject private var audioModel = AudioModel() // Use AudioModel instead of AudioRecorderManager
 
     init(video: Video) {
         self.video = video
@@ -74,17 +76,22 @@ struct VideoDetailView: View {
                 } //: VSTACK
                 .navigationBarTitle("Watch about \(video.title)", displayMode: .inline)
                 .navigationBarItems(trailing: HStack {
-//                    Button(action: {
-//                        withAnimation {
-//                            showAddTakeawayAlert.toggle()
-//                        }
-//                    }) {
-//                        Image(systemName: "plus")
-//                    }
+                    Button(action: {
+                        withAnimation {
+                            showAddTakeawayAlert.toggle()
+                        }
+                    }) {
+                        Image(systemName: "plus")
+                    }
                     Button(action: {
                         takeScreenshot()
                     }) {
                         Image(systemName: "square.and.arrow.up")
+                    }
+                    Button(action: {
+                        showAIAudioView()
+                    }) {
+                        Image(systemName: "brain.head.profile")
                     }
                 })
             } //: SCROLL
@@ -98,6 +105,7 @@ struct VideoDetailView: View {
                 .transition(.opacity)
                 .animation(.easeInOut, value: showAddTakeawayAlert)
             }
+
         }
         .onChange(of: showAddTakeawayAlert) { _ in
             if !showAddTakeawayAlert {
@@ -109,6 +117,9 @@ struct VideoDetailView: View {
         }, content: { item in
             ShareSheet(activityItems: [item.image])
         })
+        .sheet(isPresented: $showAIResponse) {
+            AIAudioView(am: audioModel)
+        }
     }
 
     private func takeScreenshot() {
@@ -131,6 +142,20 @@ struct VideoDetailView: View {
             } else {
                 print("Snapshot failed.")
             }
+        }
+    }
+
+    private func showAIAudioView() {
+        guard let window = UIApplication.shared.windows.first else {
+            print("No key window found.")
+            return
+        }
+
+        if let image = window.snapshot {
+            audioModel.processingImageTask = audioModel.processImageTask(image: image)
+            showAIResponse = true
+        } else {
+            print("Snapshot failed.")
         }
     }
 

@@ -13,6 +13,8 @@ struct ProjectDetailView: View {
     @State private var takeaways: [String]
     @EnvironmentObject var firestoreManager: FirestoreManager
     @State private var screenshotImage: IdentifiableImage?
+    @State private var showAIResponse = false // State to show/hide the AI response pop-up
+    @StateObject private var audioModel = AudioModel() // Use AudioModel instead of AudioRecorderManager
 
     init(project: Project) {
         self.project = project
@@ -77,17 +79,22 @@ struct ProjectDetailView: View {
                 }
                 .navigationBarTitle("Learn about \(project.title)", displayMode: .inline)
                 .navigationBarItems(trailing: HStack {
-//                    Button(action: {
-//                        withAnimation {
-//                            showAddTakeawayAlert.toggle()
-//                        }
-//                    }) {
-//                        Image(systemName: "plus")
-//                    }
+                    Button(action: {
+                        withAnimation {
+                            showAddTakeawayAlert.toggle()
+                        }
+                    }) {
+                        Image(systemName: "plus")
+                    }
                     Button(action: {
                         takeScreenshot()
                     }) {
                         Image(systemName: "square.and.arrow.up")
+                    }
+                    Button(action: {
+                        showAIAudioView()
+                    }) {
+                        Image(systemName: "brain.head.profile")
                     }
                 })
             }
@@ -112,6 +119,9 @@ struct ProjectDetailView: View {
         }, content: { item in
             ShareSheet(activityItems: [item.image])
         })
+        .sheet(isPresented: $showAIResponse) {
+            AIAudioView(am: audioModel)
+        }
     }
 
     private func takeScreenshot() {
@@ -134,6 +144,20 @@ struct ProjectDetailView: View {
             } else {
                 print("Snapshot failed.")
             }
+        }
+    }
+
+    private func showAIAudioView() {
+        guard let window = UIApplication.shared.windows.first else {
+            print("No key window found.")
+            return
+        }
+
+        if let image = window.snapshot {
+            audioModel.processingImageTask = audioModel.processImageTask(image: image)
+            showAIResponse = true
+        } else {
+            print("Snapshot failed.")
         }
     }
 

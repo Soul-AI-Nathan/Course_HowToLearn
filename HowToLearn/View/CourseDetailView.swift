@@ -16,6 +16,8 @@ struct CourseDetailView: View {
     @EnvironmentObject var firestoreManager: FirestoreManager
     @State private var isShareSheetPresented = false
     @State private var screenshotImage: IdentifiableImage?
+    @State private var showAIResponse = false // State to show/hide the AI response pop-up
+    @StateObject private var audioModel = AudioModel() // Use AudioModel instead of AudioRecorderManager
 
     init(course: Course) {
         self.course = course
@@ -80,17 +82,22 @@ struct CourseDetailView: View {
                 }
                 .navigationBarTitle("Learn about \(course.title)", displayMode: .inline)
                 .navigationBarItems(trailing: HStack {
-//                    Button(action: {
-//                        withAnimation {
-//                            showAddTakeawayAlert.toggle()
-//                        }
-//                    }) {
-//                        Image(systemName: "plus")
-//                    }
+                    Button(action: {
+                        withAnimation {
+                            showAddTakeawayAlert.toggle()
+                        }
+                    }) {
+                        Image(systemName: "plus")
+                    }
                     Button(action: {
                         takeScreenshot()
                     }) {
                         Image(systemName: "square.and.arrow.up")
+                    }
+                    Button(action: {
+                        showAIAudioView()
+                    }) {
+                        Image(systemName: "brain.head.profile")
                     }
                 })
             }
@@ -104,6 +111,7 @@ struct CourseDetailView: View {
                 .transition(.opacity)
                 .animation(.easeInOut, value: showAddTakeawayAlert)
             }
+
         }
         .onChange(of: showAddTakeawayAlert) { _ in
             if !showAddTakeawayAlert {
@@ -115,6 +123,9 @@ struct CourseDetailView: View {
         }, content: { item in
             ShareSheet(activityItems: [item.image])
         })
+        .sheet(isPresented: $showAIResponse) {
+            AIAudioView(am: audioModel)
+        }
     }
 
     private func takeScreenshot() {
@@ -137,6 +148,20 @@ struct CourseDetailView: View {
             } else {
                 print("Snapshot failed.")
             }
+        }
+    }
+
+    private func showAIAudioView() {
+        guard let window = UIApplication.shared.windows.first else {
+            print("No key window found.")
+            return
+        }
+
+        if let image = window.snapshot {
+            audioModel.processingImageTask = audioModel.processImageTask(image: image)
+            showAIResponse = true
+        } else {
+            print("Snapshot failed.")
         }
     }
 
@@ -164,7 +189,6 @@ struct CourseDetailView: View {
         }
     }
 }
-
 
 #Preview {
     CourseDetailView(course: Course(id: "1", title: "Sample Title", description: "Sample description for the course.", image_url: "https://via.placeholder.com/150", course_url: "https://www.xiaoyuzhoufm.com/episode/665faf066488b5dec3b8b28d", timestamp: Date(), takeaways: ["This is a sample takeaway.", "Another takeaway."]))

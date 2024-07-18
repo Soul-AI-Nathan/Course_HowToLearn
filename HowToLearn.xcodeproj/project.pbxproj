@@ -32,6 +32,11 @@
 		9E77E1142C1E97BE0098D255 /* AddBookAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E77E1132C1E97BE0098D255 /* AddBookAlertView.swift */; };
 		9E77E1162C1EA7B40098D255 /* AddCourseAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E77E1152C1EA7B40098D255 /* AddCourseAlertView.swift */; };
 		9E77E1182C1EF6050098D255 /* AddArticleAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E77E1172C1EF6050098D255 /* AddArticleAlertView.swift */; };
+		9E9C87782C4413D6007988E6 /* SiriWaveView in Frameworks */ = {isa = PBXBuildFile; productRef = 9E9C87772C4413D6007988E6 /* SiriWaveView */; };
+		9E9C877A2C441406007988E6 /* AIAudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9C87792C441406007988E6 /* AIAudioView.swift */; };
+		9E9C877C2C441457007988E6 /* AudioModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9C877B2C441457007988E6 /* AudioModel.swift */; };
+		9E9C877F2C44147F007988E6 /* XCAOpenAIClient in Frameworks */ = {isa = PBXBuildFile; productRef = 9E9C877E2C44147F007988E6 /* XCAOpenAIClient */; };
+		9E9C87812C441635007988E6 /* Voice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E9C87802C441635007988E6 /* Voice.swift */; };
 		9EA33B1A2C104B0A003BAA4E /* HowToLearnApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA33B192C104B0A003BAA4E /* HowToLearnApp.swift */; };
 		9EA33B1E2C104B0C003BAA4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EA33B1D2C104B0C003BAA4E /* Assets.xcassets */; };
 		9EA33B212C104B0C003BAA4E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9EA33B202C104B0C003BAA4E /* Preview Assets.xcassets */; };
@@ -101,6 +106,9 @@
 		9E77E1132C1E97BE0098D255 /* AddBookAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBookAlertView.swift; sourceTree = "<group>"; };
 		9E77E1152C1EA7B40098D255 /* AddCourseAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCourseAlertView.swift; sourceTree = "<group>"; };
 		9E77E1172C1EF6050098D255 /* AddArticleAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddArticleAlertView.swift; sourceTree = "<group>"; };
+		9E9C87792C441406007988E6 /* AIAudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIAudioView.swift; sourceTree = "<group>"; };
+		9E9C877B2C441457007988E6 /* AudioModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioModel.swift; sourceTree = "<group>"; };
+		9E9C87802C441635007988E6 /* Voice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Voice.swift; sourceTree = "<group>"; };
 		9EA33B162C104B0A003BAA4E /* HowToLearn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HowToLearn.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EA33B192C104B0A003BAA4E /* HowToLearnApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowToLearnApp.swift; sourceTree = "<group>"; };
 		9EA33B1D2C104B0C003BAA4E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -144,10 +152,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				9EEB4B9E2C1D187500A40ADB /* FirebaseMessaging in Frameworks */,
+				9E9C87782C4413D6007988E6 /* SiriWaveView in Frameworks */,
 				9EC968FB2C14427400AD0B0F /* FirebaseFirestore in Frameworks */,
 				9EC969072C14453E00AD0B0F /* FirebaseFirestoreSwift in Frameworks */,
 				9EC54B0D2C150B5B00F8ADC9 /* YouTubePlayerKit in Frameworks */,
 				9EC54B042C14D8E500F8ADC9 /* FirebaseStorage in Frameworks */,
+				9E9C877F2C44147F007988E6 /* XCAOpenAIClient in Frameworks */,
 				9EB39E052C2D4C9200924305 /* FirebaseAuth in Frameworks */,
 				9EC54B102C155FEB00F8ADC9 /* SwiftSoup in Frameworks */,
 			);
@@ -218,6 +228,7 @@
 		9EC968FC2C14441200AD0B0F /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				9E9C877B2C441457007988E6 /* AudioModel.swift */,
 				9EC968FD2C14443000AD0B0F /* FirestoreManager.swift */,
 				9EB39E022C2D4A0B00924305 /* ChatManager.swift */,
 				9EB39E062C2D4CFB00924305 /* AuthManager.swift */,
@@ -241,6 +252,7 @@
 				9EEB4BB02C1D791100A40ADB /* CommentPodcast.swift */,
 				9EEB4BB42C1D79D100A40ADB /* CommentCourse.swift */,
 				9E71C87D2C29F5F0008FDC66 /* CommentProject.swift */,
+				9E9C87802C441635007988E6 /* Voice.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -255,6 +267,7 @@
 		9EC969082C144BC000AD0B0F /* View */ = {
 			isa = PBXGroup;
 			children = (
+				9E9C87792C441406007988E6 /* AIAudioView.swift */,
 				9EC9690B2C144C6400AD0B0F /* ArticleListView.swift */,
 				9EC969112C14580300AD0B0F /* ArticleDetailView.swift */,
 				9EC54B072C14FAF000F8ADC9 /* VideoListView.swift */,
@@ -311,6 +324,8 @@
 				9EC54B0F2C155FEB00F8ADC9 /* SwiftSoup */,
 				9EEB4B9D2C1D187500A40ADB /* FirebaseMessaging */,
 				9EB39E042C2D4C9200924305 /* FirebaseAuth */,
+				9E9C87772C4413D6007988E6 /* SiriWaveView */,
+				9E9C877E2C44147F007988E6 /* XCAOpenAIClient */,
 			);
 			productName = HowToLearn;
 			productReference = 9EA33B162C104B0A003BAA4E /* HowToLearn.app */;
@@ -344,6 +359,8 @@
 				9EC968F92C14427400AD0B0F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				9EC54B0B2C150B5B00F8ADC9 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */,
 				9EC54B0E2C155FEB00F8ADC9 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+				9E9C87762C4413D6007988E6 /* XCRemoteSwiftPackageReference "SiriWaveView" */,
+				9E9C877D2C44147F007988E6 /* XCRemoteSwiftPackageReference "XCAOpenAIClient" */,
 			);
 			productRefGroup = 9EA33B172C104B0A003BAA4E /* Products */;
 			projectDirPath = "";
@@ -378,6 +395,7 @@
 				9E71C87E2C29F5F0008FDC66 /* CommentProject.swift in Sources */,
 				9E71C8842C29F96C008FDC66 /* ProjectDetailView.swift in Sources */,
 				9EC969122C14580300AD0B0F /* ArticleDetailView.swift in Sources */,
+				9E9C87812C441635007988E6 /* Voice.swift in Sources */,
 				9EB39E012C2D49EF00924305 /* ChatView.swift in Sources */,
 				9E1D89FE2C41188600E86A55 /* TimerManager.swift in Sources */,
 				9EEB4BB72C1D79E400A40ADB /* CommentCourseView.swift in Sources */,
@@ -400,6 +418,7 @@
 				9E2CE0842C22DED5008D4391 /* AddTakeawayAlertView.swift in Sources */,
 				9E71C8802C29F766008FDC66 /* CommentProjectView.swift in Sources */,
 				9E1C03802C19398600CD93D7 /* CourseListView.swift in Sources */,
+				9E9C877A2C441406007988E6 /* AIAudioView.swift in Sources */,
 				9EEB4BB52C1D79D100A40ADB /* CommentCourse.swift in Sources */,
 				9EC54B1C2C15979700F8ADC9 /* Podcast.swift in Sources */,
 				9E71C8822C29F903008FDC66 /* AddProjectAlertView.swift in Sources */,
@@ -416,6 +435,7 @@
 				9E77E1182C1EF6050098D255 /* AddArticleAlertView.swift in Sources */,
 				9EC54B082C14FAF000F8ADC9 /* VideoListView.swift in Sources */,
 				9EC54B0A2C14FBE200F8ADC9 /* VideoDetailView.swift in Sources */,
+				9E9C877C2C441457007988E6 /* AudioModel.swift in Sources */,
 				9E77E1162C1EA7B40098D255 /* AddCourseAlertView.swift in Sources */,
 				9E019FD72C1239F300AF8949 /* PodcastView.swift in Sources */,
 				9EEB4BAB2C1D777400A40ADB /* CommentVideoView.swift in Sources */,
@@ -572,12 +592,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = SoulAI.HowToLearn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -608,12 +628,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = SoulAI.HowToLearn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -648,6 +668,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		9E9C87762C4413D6007988E6 /* XCRemoteSwiftPackageReference "SiriWaveView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/alfianlosari/SiriWaveView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
+		9E9C877D2C44147F007988E6 /* XCRemoteSwiftPackageReference "XCAOpenAIClient" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/alfianlosari/XCAOpenAIClient";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		9EC54B0B2C150B5B00F8ADC9 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SvenTiigi/YouTubePlayerKit.git";
@@ -675,6 +711,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		9E9C87772C4413D6007988E6 /* SiriWaveView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9E9C87762C4413D6007988E6 /* XCRemoteSwiftPackageReference "SiriWaveView" */;
+			productName = SiriWaveView;
+		};
+		9E9C877E2C44147F007988E6 /* XCAOpenAIClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9E9C877D2C44147F007988E6 /* XCRemoteSwiftPackageReference "XCAOpenAIClient" */;
+			productName = XCAOpenAIClient;
+		};
 		9EB39E042C2D4C9200924305 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9EC968F92C14427400AD0B0F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

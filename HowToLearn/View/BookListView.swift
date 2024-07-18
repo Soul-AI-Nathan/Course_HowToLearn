@@ -36,7 +36,7 @@ struct BookListView: View {
 
             VStack(alignment: .leading, spacing: 8) {
                 Text(book.title)
-                    .font(.title3)
+                    .font(.headline)
                     .fontWeight(.heavy)
                     .foregroundColor(.accentColor)
 
