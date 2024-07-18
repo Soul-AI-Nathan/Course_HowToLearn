@@ -22,26 +22,26 @@ struct BookView: View {
                             NavigationLink(value: book) {
                                 BookListView(book: book)
                             }
-                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                                Button(role: .destructive) {
-                                    deleteBook(book: book)
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
-                                }
-                            }
+//                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+//                                Button(role: .destructive) {
+//                                    deleteBook(book: book)
+//                                } label: {
+//                                    Label("Delete", systemImage: "trash")
+//                                }
+//                            }
                         }
                     }
                 }
             }
             .padding(.bottom, 50) // Add padding at the bottom to keep it above the tab bar
             .navigationTitle("Book")
-            .navigationBarItems(trailing: Button(action: {
-                withAnimation {
-                    showAddBookAlert.toggle()
-                }
-            }) {
-                Image(systemName: "plus")
-            })
+//            .navigationBarItems(trailing: Button(action: {
+//                withAnimation {
+//                    showAddBookAlert.toggle()
+//                }
+//            }) {
+//                Image(systemName: "plus")
+//            })
             .navigationDestination(for: Book.self) { book in
                 BookDetailView(book: book)
             }

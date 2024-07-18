@@ -32,13 +32,13 @@ struct TakeawayView: View {
                         .padding()
                         .cornerRadius(10)
                         .padding(.horizontal, 10)
-                        .contextMenu {
-                            Button(action: {
-                                deleteTakeaway(takeaway)
-                            }) {
-                                Label("Delete", systemImage: "trash")
-                            }
-                        }
+//                        .contextMenu {
+//                            Button(action: {
+//                                deleteTakeaway(takeaway)
+//                            }) {
+//                                Label("Delete", systemImage: "trash")
+//                            }
+//                        }
                 }
             }
             .tabViewStyle(PageTabViewStyle())
