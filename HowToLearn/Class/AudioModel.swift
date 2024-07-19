@@ -129,7 +129,7 @@ class AudioModel: NSObject, AVAudioRecorderDelegate,  AVAudioPlayerDelegate, Obs
         }
 
         let payload: [String: Any] = [
-            "model": "gpt-4o",
+            "model": "gpt-4o-mini",
             "messages": conversationHistory,
             "max_tokens": 300
         ]

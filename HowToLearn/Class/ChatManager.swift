@@ -12,6 +12,7 @@ struct Message: Identifiable, Equatable {
     var id: String
     var text: String
     var isCurrentUser: Bool
+    var quotedMessage: String? // Optional quoted message
 }
 
 class ChatManager: ObservableObject {
@@ -37,20 +38,25 @@ class ChatManager: ObservableObject {
                 let text = data["text"] as? String ?? ""
                 let uid = data["uid"] as? String ?? ""
                 let isCurrentUser = uid == Auth.auth().currentUser?.uid
+                let quotedMessage = data["quotedMessage"] as? String
                 
-                return Message(id: id, text: text, isCurrentUser: isCurrentUser)
+                return Message(id: id, text: text, isCurrentUser: isCurrentUser, quotedMessage: quotedMessage)
             }
         }
     }
     
-    func sendMessage(text: String) {
+    func sendMessage(text: String, quotedMessage: String? = nil) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        let message = [
+        var message: [String: Any] = [
             "text": text,
             "uid": uid,
             "timestamp": Timestamp()
-        ] as [String : Any]
+        ]
+        
+        if let quotedMessage = quotedMessage {
+            message["quotedMessage"] = quotedMessage
+        }
         
         db.collection("messages").addDocument(data: message) { error in
             if let error = error {

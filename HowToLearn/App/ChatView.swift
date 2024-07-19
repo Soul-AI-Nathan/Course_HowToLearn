@@ -14,98 +14,147 @@ struct ChatView: View {
     @State private var showAlert = false
     @State private var showMailComposer = false
     @State private var mailData = MailData(subject: "Report Abusive Message", recipients: ["support@soul-ai.xyz"], messageBody: "")
+    @State private var quotedMessage: Message? // State for quoted message
+    @State private var scrollToLastMessage = false // State to control scrolling
 
     var body: some View {
-        VStack {
-            ScrollViewReader { scrollView in
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 8) {
-                        ForEach(chatManager.messages) { message in
-                            Text(message.text)
-                                .padding()
-                                .background(message.isCurrentUser ? Color.blue : Color.gray)
-                                .cornerRadius(8)
-                                .foregroundColor(.white)
-                                .frame(maxWidth: .infinity, alignment: message.isCurrentUser ? .trailing : .leading)
-//                                .contextMenu {
-//                                    Button(action: {
-//                                        chatManager.deleteMessage(id: message.id)
-//                                    }) {
-//                                        Label("Delete", systemImage: "trash")
-//                                    }
-//                                }
-                        }
-                    }
-                    .padding()
-                    .onAppear {
-                        if let lastMessage = chatManager.messages.last {
-                            withAnimation {
-                                scrollView.scrollTo(lastMessage.id, anchor: .bottom)
+        GeometryReader { geometry in
+            VStack {
+                ScrollViewReader { scrollView in
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 8) {
+                            ForEach(chatManager.messages) { message in
+                                VStack(alignment: .leading) {
+                                    Text(message.text)
+                                        .padding()
+                                        .background(message.isCurrentUser ? Color.blue : Color.gray)
+                                        .cornerRadius(8)
+                                        .foregroundColor(.white)
+                                        .frame(maxWidth: .infinity, alignment: message.isCurrentUser ? .trailing : .leading)
+                                        .contextMenu {
+//                                            Button(action: {
+//                                                chatManager.deleteMessage(id: message.id)
+//                                            }) {
+//                                                Label("Delete", systemImage: "trash")
+//                                            }
+                                            Button(action: {
+                                                quotedMessage = message
+                                                scrollToLastMessage = true
+                                            }) {
+                                                Label("Quote", systemImage: "quote.bubble")
+                                            }
+                                        }
+                                    if let quotedText = message.quotedMessage {
+                                        Text("Quoted: \(quotedText)")
+                                            .font(.subheadline)
+                                            .foregroundColor(.gray)
+                                            .padding([.leading, .trailing], 8)
+                                    }
+                                }
                             }
                         }
-                    }
-                    .onChange(of: chatManager.messages.count) { _ in
-                        if let lastMessage = chatManager.messages.last {
-                            withAnimation {
-                                scrollView.scrollTo(lastMessage.id, anchor: .bottom)
+                        .padding()
+                        .onAppear {
+                            if let lastMessage = chatManager.messages.last {
+                                withAnimation {
+                                    print("Scrolling to last message on appear with ID: \(lastMessage.id)")
+                                    scrollView.scrollTo(lastMessage.id, anchor: .bottom)
+                                }
+                            }
+                        }
+                        .onChange(of: chatManager.messages.count) { _ in
+                            if let lastMessage = chatManager.messages.last {
+                                withAnimation {
+                                    print("Scrolling to last message on change with ID: \(lastMessage.id)")
+                                    scrollView.scrollTo(lastMessage.id, anchor: .bottom)
+                                }
+                            }
+                        }
+                        .onChange(of: scrollToLastMessage) { value in
+                            if value, let lastMessage = chatManager.messages.last {
+                                withAnimation {
+                                    print("Scrolling to last message on quote with ID: \(lastMessage.id)")
+                                    scrollView.scrollTo(lastMessage.id, anchor: .bottom)
+                                }
+                                scrollToLastMessage = false // Reset scroll trigger
                             }
                         }
                     }
                 }
-            }
 
-            if showAlert {
-                Text("Cannot send empty message")
+                if showAlert {
+                    Text("Cannot send empty message")
+                        .foregroundColor(.red)
+                        .padding(.bottom, 8)
+                        .transition(.opacity)
+                }
+
+                if let quoted = quotedMessage {
+                    HStack {
+                        Text("Replying to: \(quoted.text)")
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
+                            .padding([.leading, .trailing], 8)
+                        Spacer()
+                        Button(action: {
+                            quotedMessage = nil
+                        }) {
+                            Image(systemName: "xmark.circle.fill")
+                                .foregroundColor(.gray)
+                        }
+                    }
+                    .padding([.leading, .trailing, .bottom], 8)
+                    .background(Color(UIColor.systemGray6))
+                }
+
+                HStack {
+                    TextField("Enter message", text: $messageText)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .frame(minHeight: 30)
+
+                    Button(action: {
+                        if messageText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                            withAnimation {
+                                showAlert = true
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                                withAnimation {
+                                    showAlert = false
+                                }
+                            }
+                        } else {
+                            chatManager.sendMessage(text: messageText, quotedMessage: quotedMessage?.text)
+                            messageText = ""
+                            quotedMessage = nil
+                            hideKeyboard()
+                        }
+                    }) {
+                        Text("Send")
+                    }
+                }
+                .padding()
+                .background(Color(UIColor.systemBackground))
+                .animation(.easeInOut)
+                .onTapGesture {
+                    hideKeyboard()
+                }
+            }
+            .navigationBarTitle("How学群", displayMode: .inline)
+            .navigationBarItems(trailing: Button(action: {
+                showMailComposer = true
+            }) {
+                Image(systemName: "exclamationmark.bubble")
+                    .imageScale(.large)
                     .foregroundColor(.red)
-                    .padding(.bottom, 8)
-                    .transition(.opacity)
-            }
-
-            HStack {
-                TextField("Enter message", text: $messageText)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .frame(minHeight: 30)
-
-                Button(action: {
-                    if messageText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                        withAnimation {
-                            showAlert = true
-                        }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                            withAnimation {
-                                showAlert = false
-                            }
-                        }
-                    } else {
-                        chatManager.sendMessage(text: messageText)
-                        messageText = ""
-                        hideKeyboard()
-                    }
-                }) {
-                    Text("Send")
+            })
+            .background(Color.white.edgesIgnoringSafeArea(.all)) // Ensure the background covers the entire view
+            .sheet(isPresented: $showMailComposer) {
+                MailView(mailData: mailData) { result in
+                    print(result)
                 }
             }
-            .padding()
+            .withTimer() // Apply the timer
         }
-        .navigationBarTitle("How学群", displayMode: .inline)
-        .navigationBarItems(trailing: Button(action: {
-            showMailComposer = true
-        }) {
-            Image(systemName: "exclamationmark.bubble")
-                .imageScale(.large)
-                .foregroundColor(.red)
-        })
-        .background(Color.white.edgesIgnoringSafeArea(.all)) // Ensure the background covers the entire view
-        .onTapGesture {
-            hideKeyboard()
-        }
-        .animation(.easeInOut)
-        .sheet(isPresented: $showMailComposer) {
-            MailView(mailData: mailData) { result in
-                print(result)
-            }
-        }
-        .withTimer() // Apply the timer
     }
 
     private func hideKeyboard() {
@@ -118,6 +167,10 @@ struct ChatView_Previews: PreviewProvider {
         ChatView()
     }
 }
+
+
+
+
 
 // MailView.swift
 import SwiftUI
