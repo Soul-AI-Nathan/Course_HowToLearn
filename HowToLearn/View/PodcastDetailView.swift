@@ -42,6 +42,16 @@ struct PodcastDetailView: View {
                         }
                     }
                     
+                    if !podcast.audio_url.isEmpty {
+                        if let audioURL = URL(string: podcast.audio_url) {
+                            AudioPlayerView(audioURL: audioURL)
+                                .padding(.horizontal)
+                        } else {
+                            Text("Invalid audio URL")
+                                .foregroundColor(.red)
+                        }
+                    }
+                    
                     Text(podcast.title.uppercased())
                         .font(.title3)
                         .fontWeight(.heavy)
@@ -51,7 +61,7 @@ struct PodcastDetailView: View {
                         .background(
                             Color.accentColor
                                 .frame(height: 6)
-                                .offset(y: 24)
+                                .offset(y: 30)
                         )
                     
                     Text(podcast.description)
