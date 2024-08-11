@@ -32,11 +32,11 @@ struct ChatView: View {
                                         .foregroundColor(.white)
                                         .frame(maxWidth: .infinity, alignment: message.isCurrentUser ? .trailing : .leading)
                                         .contextMenu {
-                                            Button(action: {
-                                                chatManager.deleteMessage(id: message.id)
-                                            }) {
-                                                Label("Delete", systemImage: "trash")
-                                            }
+//                                            Button(action: {
+//                                                chatManager.deleteMessage(id: message.id)
+//                                            }) {
+//                                                Label("Delete", systemImage: "trash")
+//                                            }
                                             Button(action: {
                                                 quotedMessage = message
                                                 scrollToLastMessage = true

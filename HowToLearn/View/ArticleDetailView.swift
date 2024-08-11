@@ -99,13 +99,13 @@ struct ArticleDetailView: View {
                 } //: VSTACK
                 .navigationBarTitle("Read about \(article.title)", displayMode: .inline)
                 .navigationBarItems(trailing: HStack {
-                    Button(action: {
-                        withAnimation {
-                            showAddTakeawayAlert.toggle()
-                        }
-                    }) {
-                        Image(systemName: "plus")
-                    }
+//                    Button(action: {
+//                        withAnimation {
+//                            showAddTakeawayAlert.toggle()
+//                        }
+//                    }) {
+//                        Image(systemName: "plus")
+//                    }
                     Button(action: {
                         takeScreenshot()
                     }) {
@@ -116,11 +116,11 @@ struct ArticleDetailView: View {
                     }) {
                         Image(systemName: "brain.head.profile")
                     }
-                    Button(action: {
-                        isImagePickerPresented = true  // Present the image picker
-                    }) {
-                        Image(systemName: "photo")
-                    }
+//                    Button(action: {
+//                        isImagePickerPresented = true  // Present the image picker
+//                    }) {
+//                        Image(systemName: "photo")
+//                    }
                 })
                 .sheet(isPresented: $isImagePickerPresented) {
                     PhotoPicker(selectedImages: $selectedImages)  // Present the custom PhotoPicker
