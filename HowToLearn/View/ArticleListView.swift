@@ -323,7 +323,10 @@ func downloadImage(from url: String, completion: @escaping (Data?) -> Void) {
 func uploadImageToFirebaseStorage(imageData: Data, for article: BlogArticle, completion: @escaping (String?) -> Void) {
     let storage = Storage.storage()
     let storageRef = storage.reference()
-    let articleImageRef = storageRef.child("articles/\(article.id ?? UUID().uuidString).jpg")
+    
+    // Generate a unique file name for each image
+    let uniqueFileName = UUID().uuidString
+    let articleImageRef = storageRef.child("articles/\(article.id ?? UUID().uuidString)/\(uniqueFileName).jpg")
 
     let metadata = StorageMetadata()
     metadata.contentType = "image/jpeg"
