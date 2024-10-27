@@ -28,7 +28,8 @@ struct AudioPlayerView: View {
                 Text(timeFormatter.string(from: currentTime) ?? "0:00")
                     .font(.footnote)
 
-                Slider(value: $currentTime, in: 0...duration, onEditingChanged: sliderEditingChanged)
+                // Updated Slider to handle invalid duration gracefully
+                Slider(value: $currentTime, in: 0...(duration > 0 ? duration : 1), onEditingChanged: sliderEditingChanged)
 
                 Text(timeFormatter.string(from: duration) ?? "0:00")
                     .font(.footnote)
@@ -77,7 +78,14 @@ struct AudioPlayerView: View {
         let interval = CMTime(seconds: 1, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
         audioPlayer?.addPeriodicTimeObserver(forInterval: interval, queue: .main) { time in
             currentTime = CMTimeGetSeconds(time)
-            duration = CMTimeGetSeconds(playerItem.duration)
+            
+            // Ensure we handle indefinite duration or invalid value gracefully
+            let durationInSeconds = CMTimeGetSeconds(playerItem.duration)
+            if durationInSeconds > 0 {
+                duration = durationInSeconds
+            } else {
+                duration = 0
+            }
         }
     }
 

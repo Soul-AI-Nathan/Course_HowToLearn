@@ -192,5 +192,6 @@ struct MainView: View {
 
 #Preview {
     MainView()
+        .environmentObject(TimerManager())
 }
 

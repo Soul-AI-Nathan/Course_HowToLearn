@@ -22,26 +22,26 @@ struct VideoView: View {
                             NavigationLink(value: video) {
                                 VideoListView(video: video)
                             }
-//                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-//                                Button(role: .destructive) {
-//                                    deleteVideo(video: video)
-//                                } label: {
-//                                    Label("Delete", systemImage: "trash")
-//                                }
-//                            }
+                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                Button(role: .destructive) {
+                                    deleteVideo(video: video)
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                            }
                         }
                     }
                 }
             }
             .padding(.bottom, 50) // Add padding at the bottom to keep it above the tab bar
             .navigationTitle("Video")
-//            .navigationBarItems(trailing: Button(action: {
-//                withAnimation {
-//                    showAddVideoAlert.toggle()
-//                }
-//            }) {
-//                Image(systemName: "plus")
-//            })
+            .navigationBarItems(trailing: Button(action: {
+                withAnimation {
+                    showAddVideoAlert.toggle()
+                }
+            }) {
+                Image(systemName: "plus")
+            })
             .navigationDestination(for: Video.self) { video in
                 VideoDetailView(video: video)
             }
@@ -89,6 +89,7 @@ struct VideoView: View {
 
 #Preview {
     VideoView()
+        .environmentObject(TimerManager()) // Inject the TimerManager environment object
 }
 
 

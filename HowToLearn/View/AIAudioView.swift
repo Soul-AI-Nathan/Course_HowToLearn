@@ -21,8 +21,7 @@ struct AIAudioView: View {
                 .font(.title2)
             
             Spacer()
-            SiriWaveView()
-                .power(power: am.audioPower)
+            SiriWaveView(power: $am.audioPower)
                 .opacity(am.siriWaveFormOpacity)
                 .frame(height: 256)
                 .overlay { overlayView }

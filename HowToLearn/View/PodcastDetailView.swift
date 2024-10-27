@@ -61,7 +61,7 @@ struct PodcastDetailView: View {
                         .background(
                             Color.accentColor
                                 .frame(height: 6)
-                                .offset(y: 30)
+                                .offset(y: 40)
                         )
                     
                     Text(podcast.description)
@@ -88,13 +88,13 @@ struct PodcastDetailView: View {
                 } //: VSTACK
                 .navigationBarTitle("Listen to \(podcast.title)", displayMode: .inline)
                 .navigationBarItems(trailing: HStack {
-//                    Button(action: {
-//                        withAnimation {
-//                            showAddTakeawayAlert.toggle()
-//                        }
-//                    }) {
-//                        Image(systemName: "plus")
-//                    }
+                    Button(action: {
+                        withAnimation {
+                            showAddTakeawayAlert.toggle()
+                        }
+                    }) {
+                        Image(systemName: "plus")
+                    }
                     Button(action: {
                         takeScreenshot()
                     }) {

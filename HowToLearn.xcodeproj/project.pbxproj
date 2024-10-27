@@ -267,7 +267,6 @@
 		9EC969082C144BC000AD0B0F /* View */ = {
 			isa = PBXGroup;
 			children = (
-				9E9C87792C441406007988E6 /* AIAudioView.swift */,
 				9EC9690B2C144C6400AD0B0F /* ArticleListView.swift */,
 				9EC969112C14580300AD0B0F /* ArticleDetailView.swift */,
 				9EC54B072C14FAF000F8ADC9 /* VideoListView.swift */,
@@ -280,6 +279,7 @@
 				9E1C03812C19399500CD93D7 /* CourseDetailView.swift */,
 				9E71C8852C29FC18008FDC66 /* ProjectListView.swift */,
 				9E71C8832C29F96C008FDC66 /* ProjectDetailView.swift */,
+				9E9C87792C441406007988E6 /* AIAudioView.swift */,
 				9E77E1172C1EF6050098D255 /* AddArticleAlertView.swift */,
 				9E1C03852C19819A00CD93D7 /* AddVideoAlertView.swift */,
 				9E77E1132C1E97BE0098D255 /* AddBookAlertView.swift */,
@@ -597,7 +597,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8;
+				MARKETING_VERSION = 1.9;
 				PRODUCT_BUNDLE_IDENTIFIER = SoulAI.HowToLearn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -633,7 +633,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8;
+				MARKETING_VERSION = 1.9;
 				PRODUCT_BUNDLE_IDENTIFIER = SoulAI.HowToLearn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

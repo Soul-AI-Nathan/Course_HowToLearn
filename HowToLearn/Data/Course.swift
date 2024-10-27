@@ -17,5 +17,3 @@ struct Course: Identifiable, Codable, Hashable {
     var timestamp: Date
     var takeaways: [String]?
 }
-
-
